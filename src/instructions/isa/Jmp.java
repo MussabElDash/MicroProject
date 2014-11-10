@@ -5,13 +5,13 @@ import instructions.Instruction;
 public class Jmp extends Instruction {
 
 	protected Jmp(String[] params) {
-		super(params);
-		// TODO Auto-generated constructor stub
+		super(params, new String[]{"regA", "imm"});
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
+		mem.setRegister("PC", mem.getRegister("PC") + 1 + mem.getRegister(regA) + immValue);
 
 	}
 

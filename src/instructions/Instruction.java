@@ -1,8 +1,32 @@
 package instructions;
+
+import memory.Memory;
+
 public abstract class Instruction {
-	String[] parameters;
-	protected Instruction(String[] params) {
+	protected String[] parameters;
+	protected String regA, regB, regC, imm;
+	protected int regANum, regBNum, regCNum, immValue;
+	protected Memory mem = Memory.getInstance();
+	
+	protected Instruction(String[] params, String[] target) {
 		parameters = params;
+		for(int i = 0; i < target.length; i++) {
+			if(target[i].equals("regA")) {
+				regA = target[i];
+				regANum = mem.getRegisterNumber(regA);
+			} else if(target[i].equals("regB")) {
+				regB = target[i];
+				regBNum = mem.getRegisterNumber(regB);
+			} else if(target[i].equals("regC")) {
+				regC = target[i];
+				regCNum = mem.getRegisterNumber(regC);
+			} else if(target[i].equals("imm")) {
+				imm = target[i];
+				immValue = Integer.parseInt(imm);
+			} else {
+				System.out.println("Instruction Parameter Target Error: " + target[i]);
+			}
+		}
 	}
 	public abstract void execute();
 	public abstract String machinecode();

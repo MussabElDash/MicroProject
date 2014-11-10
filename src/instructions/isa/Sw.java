@@ -5,14 +5,12 @@ import instructions.Instruction;
 public class Sw extends Instruction {
 
 	protected Sw(String[] params) {
-		super(params);
-		// TODO Auto-generated constructor stub
+		super(params, new String[]{"regA", "regB", "imm"});
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-
+		mem.setMemoryValue(mem.getRegister(regB)+immValue, mem.getRegister(regA));
 	}
 
 	@Override
