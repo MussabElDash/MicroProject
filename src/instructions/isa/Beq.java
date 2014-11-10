@@ -5,7 +5,7 @@ import instructions.Instruction;
 public class Beq extends Instruction {
 
 	protected Beq(String[] params) {
-		super(params, new String[]{"regA", "regB", "imm"});
+		super(params, new String[]{"regA", "regB", "imm"}, "0110");
 	}
 
 	@Override

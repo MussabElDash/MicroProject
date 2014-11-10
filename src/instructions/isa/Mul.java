@@ -5,7 +5,7 @@ import instructions.Instruction;
 public class Mul extends Instruction {
 
 	protected Mul(String[] params) {
-		super(params, new String[]{"regA", "regB", "regC"});
+		super(params, new String[]{"regA", "regB", "regC"}, "1001");
 	}
 
 	@Override

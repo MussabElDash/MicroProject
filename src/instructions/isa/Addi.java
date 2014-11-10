@@ -5,7 +5,7 @@ import instructions.Instruction;
 public class Addi extends Instruction {
 
 	protected Addi(String[] params) {
-		super(params, new String[]{"regA", "regB", "imm"});
+		super(params, new String[]{"regA", "regB", "imm"}, "0001");
 	}
 
 	@Override

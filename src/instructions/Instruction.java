@@ -7,9 +7,11 @@ public abstract class Instruction {
 	protected String regA, regB, regC, imm;
 	protected int regANum, regBNum, regCNum, immValue;
 	protected Memory mem = Memory.getInstance();
+	protected String opcode;
 	
-	protected Instruction(String[] params, String[] target) {
+	protected Instruction(String[] params, String[] target, String op) {
 		parameters = params;
+		opcode = op;
 		for(int i = 0; i < target.length; i++) {
 			if(target[i].equals("regA")) {
 				regA = target[i];
