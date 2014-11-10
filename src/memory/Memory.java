@@ -1,3 +1,4 @@
+package memory;
 public abstract class Memory {
 	private Memory nextLevel, prevLevel;
 
