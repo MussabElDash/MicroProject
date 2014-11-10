@@ -1,4 +1,9 @@
 package instructions;
 public abstract class Instruction {
-	public abstract void exec();
+	String[] parameters;
+	protected Instruction(String[] params) {
+		parameters = params;
+	}
+	public abstract void execute();
+	public abstract String machinecode();
 }
