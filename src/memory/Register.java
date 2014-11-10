@@ -1,7 +1,9 @@
 package memory;
 
+import utilities.Utilities;
+
 public class Register {
-	private int value = 0;
+	private short value = 0;
 	private String title = "NOT SET";
 	private boolean isZeroRegister = false;
 	
@@ -15,12 +17,13 @@ public class Register {
 		return value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(short value) {
 		if(isZeroRegister){
-			throw new UnsupportedOperationException("You can't set the zero register!");
+			Utilities.raiseError("You can't set the zero register!");
 		}
-		
-		this.value = value;
+		else{
+			this.value = value;
+		}
 	}
 
 	public String getTitle() {
