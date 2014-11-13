@@ -1,11 +1,12 @@
 package instructions.isa;
 
 import instructions.Instruction;
+import utilities.Utilities;
 
 public class Add extends Instruction {
 
 	protected Add(String[] params) {
-		super(params, new String[]{"regA", "regB", "regC"}, "0000");
+		super(params, new String[] { "regA", "regB", "regC" }, "0000");
 	}
 
 	@Override
@@ -15,7 +16,9 @@ public class Add extends Instruction {
 
 	@Override
 	public String getMachineCode() {
-		return getOpcode() + 
+		return getOpcode() + Utilities.getBinaryNumber(getRegANum())
+				+ Utilities.getBinaryNumber(getRegBNum()) + "0000"
+				+ Utilities.getBinaryNumber(getRegCNum());
 	}
 
 }
