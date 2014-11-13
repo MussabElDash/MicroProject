@@ -14,7 +14,7 @@ public class Addi extends Instruction {
 	}
 
 	@Override
-	public String machinecode() {
+	public String getMachineCode() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -30,6 +30,39 @@ public abstract class Instruction {
 			}
 		}
 	}
+	
 	public abstract void execute();
-	public abstract String machinecode();
+	public abstract String getMachineCode();
+	
+	public int getRegANum() {
+		return regANum;
+	}
+	
+	public void setRegANum(int regANum) {
+		this.regANum = regANum;
+	}
+	
+	public int getRegBNum() {
+		return regBNum;
+	}
+	
+	public void setRegBNum(int regBNum) {
+		this.regBNum = regBNum;
+	}
+	
+	public int getRegCNum() {
+		return regCNum;
+	}
+	
+	public void setRegCNum(int regCNum) {
+		this.regCNum = regCNum;
+	}
+	
+	public String getOpcode() {
+		return opcode;
+	}
+	
+	public void setOpcode(String opcode) {
+		this.opcode = opcode;
+	}
 }

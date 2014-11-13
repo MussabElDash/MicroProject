@@ -9,7 +9,7 @@ public class Cache {
 	boolean isWriteBack = false;
 	boolean isWriteAllocate = false;
 	
-	public Cache(){
+	public Cache() {
 		
 	}
 }
