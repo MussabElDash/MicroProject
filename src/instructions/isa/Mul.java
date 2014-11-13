@@ -5,14 +5,12 @@ import instructions.Instruction;
 public class Mul extends Instruction {
 
 	protected Mul(String[] params) {
-		super(params);
-		// TODO Auto-generated constructor stub
+		super(params, new String[]{"regA", "regB", "regC"}, "1001");
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-
+		mem.setRegister(regA, mem.getRegister(regB)*mem.getRegister(regC));
 	}
 
 	@Override

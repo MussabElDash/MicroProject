@@ -5,14 +5,13 @@ import instructions.Instruction;
 public class Beq extends Instruction {
 
 	protected Beq(String[] params) {
-		super(params);
-		// TODO Auto-generated constructor stub
+		super(params, new String[]{"regA", "regB", "imm"}, "0110");
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-
+		if(mem.getRegister(regA) == mem.getRegister(regB))
+			mem.setRegister("PC", mem.getRegister("PC") + 1 + immValue);
 	}
 
 	@Override
