@@ -3,13 +3,41 @@ package memory;
 import java.util.HashMap;
 
 public class Cache {
-	HashMap<Integer, Integer> iCache = new HashMap<Integer, Integer>();
-	HashMap<Integer, Integer> dCache = new HashMap<Integer, Integer>();
-	Cache lowerLevelCache = null;
-	boolean isWriteBack = false;
-	boolean isWriteAllocate = false;
+	private HashMap<Integer, Integer> iCache = new HashMap<Integer, Integer>();
+	private HashMap<Integer, Integer> dCache = new HashMap<Integer, Integer>();
+	private Cache lowerLevelCache = null;
+	private boolean isWriteBack = false;
+	private boolean isWriteAllocate = false;
+	private int accessTime = 0;
+	private int numberOfHits = 0;
+	private int numberOfIssues = 0;
+	private int size = 0;
+	private int lineSize = 0;
+	private int associativity = 0;
 	
-	public Cache(){
+	
+	public Cache(int size, int lineSize, int associativity, boolean isWriteBack, boolean isWriteAllocate, int accessTime){
+		this.isWriteBack = isWriteBack;
+		this.isWriteAllocate = isWriteAllocate;
+		this.accessTime = accessTime;
+	}
+
+
+	public Cache getLowerLevelCache() {
+		return lowerLevelCache;
+	}
+
+
+	public void setLowerLevelCache(Cache lowerLevelCache) {
+		this.lowerLevelCache = lowerLevelCache;
+	}
+	
+	public int getValue(int address){
+		return 0;
+	}
+	
+	public void setValue(int address, int value){
 		
 	}
+
 }

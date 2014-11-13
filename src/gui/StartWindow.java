@@ -3,10 +3,14 @@ package gui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JTextPane;
+import javax.swing.JTable;
 
 public class StartWindow {
 
-	private JFrame frame;
+	private JFrame frmMicro;
 
 	/**
 	 * Launch the application.
@@ -34,10 +38,10 @@ public class StartWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		frmMicro = new JFrame();
+		frmMicro.setTitle("Micro\n");
+		frmMicro.setBounds(100, 100, 700, 900);
+		frmMicro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMicro.getContentPane().setLayout(null);
 	}
-
 }

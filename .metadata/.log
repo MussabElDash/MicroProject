@@ -1,0 +1,135 @@
+!SESSION 2014-11-10 21:50:27.455 -----------------------------------------------
+eclipse.buildId=4.3.0.M20130911-1000
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.standard.product -keyring /Users/oa12gb/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.standard.product -keyring /Users/oa12gb/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.864
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.871
+!MESSAGE System property http.proxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.872
+!MESSAGE System property http.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.873
+!MESSAGE System property https.proxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.875
+!MESSAGE System property https.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.877
+!MESSAGE System property socksProxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.878
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.896
+!MESSAGE System property https.proxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.897
+!MESSAGE System property https.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.899
+!MESSAGE System property socksProxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.901
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.905
+!MESSAGE System property socksProxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 21:51:14.907
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+!SESSION 2014-11-10 22:02:02.642 -----------------------------------------------
+eclipse.buildId=4.3.0.M20130911-1000
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.standard.product -product org.eclipse.epp.package.standard.product -keyring /Users/oa12gb/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.standard.product -data /Users/oa12gb/Desktop/Courses/GUC/CSEN 702 Microprocessors/Project/MicroProject -product org.eclipse.epp.package.standard.product -keyring /Users/oa12gb/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.628
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.633
+!MESSAGE System property http.proxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.635
+!MESSAGE System property http.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.636
+!MESSAGE System property https.proxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.638
+!MESSAGE System property https.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.640
+!MESSAGE System property socksProxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.641
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.646
+!MESSAGE System property https.proxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.647
+!MESSAGE System property https.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.650
+!MESSAGE System property socksProxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.652
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.664
+!MESSAGE System property socksProxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-10 22:02:06.667
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+!SESSION 2014-11-11 10:56:32.623 -----------------------------------------------
+eclipse.buildId=4.3.0.M20130911-1000
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.standard.product -keyring /Users/oa12gb/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.standard.product -keyring /Users/oa12gb/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.498
+!MESSAGE System property http.proxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.511
+!MESSAGE System property http.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.514
+!MESSAGE System property https.proxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.516
+!MESSAGE System property https.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.519
+!MESSAGE System property socksProxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.522
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.526
+!MESSAGE System property https.proxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.529
+!MESSAGE System property https.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.531
+!MESSAGE System property socksProxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.534
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.538
+!MESSAGE System property socksProxyHost is not set but should be 50.0.0.5.
+
+!ENTRY org.eclipse.core.net 1 0 2014-11-11 10:57:08.540
+!MESSAGE System property socksProxyPort is not set but should be 8080.
