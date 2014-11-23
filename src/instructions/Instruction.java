@@ -30,6 +30,27 @@ public abstract class Instruction {
 			}
 		}
 	}
+	
 	public abstract void execute();
-	public abstract String machinecode();
+	public abstract String getMachineCode();
+	
+	public int getRegANum() {
+		return regANum;
+	}
+	
+	public int getRegBNum() {
+		return regBNum;
+	}
+	
+	public int getRegCNum() {
+		return regCNum;
+	}
+	
+	public String getOpcode() {
+		return opcode;
+	}
+
+	public int getImmValue() {
+		return immValue;
+	}
 }

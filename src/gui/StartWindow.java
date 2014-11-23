@@ -4,10 +4,15 @@ import java.awt.EventQueue;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JTextPane;
+import javax.swing.JTable;
 
 public class StartWindow {
 
 	private JFrame frmMicro;
+
 	private JComponent currentPanel;
 	private int memAccessTime = 0, cacheLvl = 1, memorySize, CacheSizes[];
 
