@@ -16,6 +16,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import javax.swing.JTextField;
+import java.text.Format;
 
 public class StartPanel extends JPanel {
 
@@ -23,7 +24,7 @@ public class StartPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 4242215161741533193L;
-	private JTextField textField;
+	private JTextField textField, time;
 
 	/**
 	 * Create the panel.
@@ -34,50 +35,49 @@ public class StartPanel extends JPanel {
 	public StartPanel(final StartWindow startWindow, final JFrame frmMicro) {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale
+				.getDefault());
+		DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+		decimalFormat.setGroupingUsed(false);
+
 		JPanel panelCacheTechnique = new JPanel();
 		add(panelCacheTechnique);
 
-		JLabel label = new JLabel("Caching Technique");
-		panelCacheTechnique.add(label);
+		JLabel lblAccessTime = new JLabel("Access Time");
+		panelCacheTechnique.add(lblAccessTime);
 
-		final JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(
-				new String[] { "Write Back", "Write Allocate", "Write Through",
-						"Write Around" }));
-		comboBox.setSelectedIndex(0);
-		panelCacheTechnique.add(comboBox);
+		time = new JFormattedTextField(decimalFormat);
+		time.setText("1");
+		time.setColumns(8);
+		panelCacheTechnique.add(time);
 
 		JPanel panelCacheLevels = new JPanel();
 		add(panelCacheLevels);
 
 		JLabel label_1 = new JLabel("Number of Caching Levels");
 		panelCacheLevels.add(label_1);
-
-		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
-		DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
-		decimalFormat.setGroupingUsed(false);
 		textField = new JFormattedTextField(decimalFormat);
 		textField.setText("1");
-		textField.setColumns(8); //whatever size you wish to set
+		textField.setColumns(8); // whatever size you wish to set
 		panelCacheLevels.add(textField);
-		
+
 		JPanel panel = new JPanel();
 		add(panel);
-		
-				JButton button = new JButton("Next");
-				panel.add(button);
-				button.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						startWindow.setCacheLvl(Integer.parseInt(textField.getText()));
-						startWindow.setCacheTech(comboBox.getSelectedIndex());
-						frmMicro.remove(startWindow.getcurrentPanel());
-						startWindow.setcurrentPanel(new MemoryPanel(startWindow,
-								frmMicro));
-						frmMicro.getContentPane().add(startWindow.getcurrentPanel());
-						frmMicro.repaint();
-						frmMicro.revalidate();
-					}
-				});
+
+		JButton button = new JButton("Next");
+		panel.add(button);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startWindow.setCacheLvl(Integer.parseInt(textField.getText()));
+				startWindow.setMemAccessTime(Integer.parseInt(time.getText()));
+				frmMicro.remove(startWindow.getcurrentPanel());
+				startWindow.setcurrentPanel(new MemoryPanel(startWindow,
+						frmMicro));
+				frmMicro.getContentPane().add(startWindow.getcurrentPanel());
+				frmMicro.repaint();
+				frmMicro.revalidate();
+			}
+		});
 
 	}
 }

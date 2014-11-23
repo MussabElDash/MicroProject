@@ -9,7 +9,7 @@ public class StartWindow {
 
 	private JFrame frmMicro;
 	private JComponent currentPanel;
-	private int cacheTech = 0, cacheLvl = 1, memorySize, CacheSizes[];
+	private int memAccessTime = 0, cacheLvl = 1, memorySize, CacheSizes[];
 
 	public int getMemorySize() {
 		return memorySize;
@@ -33,14 +33,6 @@ public class StartWindow {
 
 	public void setcurrentPanel(JComponent currentPanel) {
 		this.currentPanel = currentPanel;
-	}
-
-	public int getCacheTech() {
-		return cacheTech;
-	}
-
-	public void setCacheTech(int cacheTech) {
-		this.cacheTech = cacheTech;
 	}
 
 	public int getCacheLvl() {
@@ -85,5 +77,13 @@ public class StartWindow {
 		frmMicro.setVisible(true);
 		currentPanel = new StartPanel(this, frmMicro);
 		frmMicro.getContentPane().add(currentPanel);
+	}
+
+	public int getMemAccessTime() {
+		return memAccessTime;
+	}
+
+	public void setMemAccessTime(int memAccessTime) {
+		this.memAccessTime = memAccessTime;
 	}
 }
