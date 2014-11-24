@@ -12,7 +12,7 @@ public class StartWindow {
 	private JFrame frmMicro;
 
 	private JComponent currentPanel;
-	private int memAccessTime = 0, cacheLvl = 1;
+	private int memAccessTime = 0, cacheLvl = 1, startAddress = 0;
 	private CacheDetailsHolder[] caches;
 
 	public JComponent getcurrentPanel() {
@@ -89,5 +89,13 @@ public class StartWindow {
 
 	public void setCaches(CacheDetailsHolder[] caches) {
 		this.caches = caches;
+	}
+
+	public int getStartAddress() {
+		return startAddress;
+	}
+
+	public void setStartAddress(int startAddress) {
+		this.startAddress = startAddress;
 	}
 }
