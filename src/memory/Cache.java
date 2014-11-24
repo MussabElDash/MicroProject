@@ -80,13 +80,12 @@ public class Cache {
 
 
 	private CacheLine<Instruction> readInstructionLine(int address) {
-		address *= 2;
-		
+		address /= 2;
 		numberOfIssues++;
 		
 		int index = (address / lineSize) % (size / associativity);
 		int tag = address / (lineSize * size / associativity);
-		
+
 		CacheLineSet<Instruction> lineSet = iCache.get(index + "");
 		int cacheLineIndex = lineSet.searchTags(tag);
 		
