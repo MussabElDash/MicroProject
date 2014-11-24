@@ -11,7 +11,7 @@ public class Assembler {
 		//return new Instruction();
 		String[] tokens = s.split("\\s");
 		String[] params = new String[tokens.length - 1];
-		for(int i = 0; i < tokens.length; i++)
+		for(int i = 0; i < params.length; i++)
 			params[i] = tokens[i+1];
 		String name = tokens[0].substring(0, 1).toUpperCase() + tokens[0].substring(1).toLowerCase();
 		
@@ -21,8 +21,8 @@ public class Assembler {
 		
 		try {
 			instructionClass = Class.forName("instructions.isa." + name);
-			constructor = instructionClass.getConstructor(String[].class, int[].class);
-			result = (Instruction) constructor.newInstance(params);
+			constructor = instructionClass.getConstructor(String[].class);
+			result = (Instruction) constructor.newInstance((Object)params);
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
