@@ -10,6 +10,7 @@ import utilities.CacheDetailsHolder;
 public class Cache {
 	private HashMap<String, Instruction> iCache = new HashMap<String, Instruction>();
 	private HashMap<String, String> dCache = new HashMap<String, String>();
+	private HashMap<String, Boolean> isDirty = new HashMap<String, Boolean>();
 	private Cache lowerLevelCache = null;
 	private boolean isWriteBack = false;
 	private boolean isWriteAllocate = false;
@@ -32,16 +33,6 @@ public class Cache {
 
 	public Cache(ArrayList<CacheDetailsHolder> caches) {
 		// TODO Auto-generated constructor stub
-	}
-
-
-	public Cache getLowerLevelCache() {
-		return lowerLevelCache;
-	}
-
-
-	public void setLowerLevelCache(Cache lowerLevelCache) {
-		this.lowerLevelCache = lowerLevelCache;
 	}
 	
 	public Instruction readInstruction(int address){
@@ -82,7 +73,7 @@ public class Cache {
 	}
 	
 	private void insertData(int address, String result) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -90,5 +81,8 @@ public class Cache {
 	public void writeData(int address, String value){
 		
 	}
-
+	
+	public void initializeMainMemory(Instruction[] instruction, int instructionStartAddress, HashMap<String, String> data){
+		
+	}
 }
