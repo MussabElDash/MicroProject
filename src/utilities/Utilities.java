@@ -11,15 +11,9 @@ public class Utilities {
 	}
 	
 	public static String getBinaryNumber(int num) {
-		String bin = "";
-		String ret = "";
-		while (num != 0) {
-			bin += num % 2;
-			num /= 2;
-		}
-		for (int i=bin.length()-1; i>=0; i--) {
-			ret += bin.charAt(i);
-		}
-		return ret;
+		int len = 0;
+		String res = Integer.toBinaryString(num);
+		int tot = res.length() - len;
+		return res.substring(tot);
 	}
 }

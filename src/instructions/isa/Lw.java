@@ -1,5 +1,6 @@
 package instructions.isa;
 
+import utilities.Utilities;
 import instructions.Instruction;
 
 public class Lw extends Instruction {
@@ -10,13 +11,14 @@ public class Lw extends Instruction {
 
 	@Override
 	public void execute() {
-		mem.setRegister(regA, mem.getRegister(regB)+immValue);
+		mem.setRegisterValue(regA, mem.getRegisterValue(regB)+immValue);
 	}
 
 	@Override
-	public String machinecode() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getMachineCode() {
+		return getOpcode() + Utilities.getBinaryNumber(getRegANum())
+				+ Utilities.getBinaryNumber(getRegBNum())
+				+ Utilities.getBinaryNumber(getImmValue());
 	}
 
 }
