@@ -30,6 +30,7 @@ public class Program {
 		this.startAddress = startAddress;
 		this.numOfInstructions = instructions.length;
 		this.execute();
+		this.afterExec();
 	}
 
 	public void execute() {
