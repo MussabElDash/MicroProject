@@ -23,6 +23,10 @@ public class CacheLine {
 		return line.get(offset);
 	}
 	
+	public void setBlock(int offset, String value){
+		line.set(offset, value);
+	}
+	
 	public boolean isDirty(){
 		return dirty;
 	}

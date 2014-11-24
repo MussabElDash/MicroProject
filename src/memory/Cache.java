@@ -63,18 +63,18 @@ public class Cache {
 		
 		return null;
 	}
-	
-	private void insertInstruction(int address, Instruction result) {
-		
-	}
 
 
 	public String readData(int address){
+		CacheLine line = readLine(address);
+		return line.getBlock(address % lineSize);
+	}
+	
+	public CacheLine readLine(int address){
 		address *= 2;
 		
 		numberOfIssues++;
 		
-		int offset = address % lineSize;
 		int index = (address / lineSize) % (size / associativity);
 		int tag = address / (lineSize * size / associativity);
 		
@@ -83,33 +83,27 @@ public class Cache {
 		
 		if(cacheLineIndex == -1){
 			// Handle read miss
-			int startAddress = address - address % lineSize;
-			ArrayList<String> newLine = new ArrayList<String>();
-			for(int q = 0; q < lineSize; q++){
-				String word = lowerLevelCache.readData(startAddress + q);
-				newLine.add(word);
-			}
-			
-			CacheLine newCacheLine = new CacheLine(lineSize);
-			newCacheLine.setLine(newLine);
+			CacheLine newCacheLine = lowerLevelCache.readLine(address);
 			
 			// Get replaces Line
-			CacheLine replacedLine = lineSet.getLineIndexToReplace();
+			int replacedLineIndex = lineSet.getLineIndexToReplace();
+			CacheLine toReplaceLine = lineSet.getCacheLine(replacedLineIndex);
 			
 			// Check for dirty bit
-			if(replacedLine.getTag() != null && replacedLine.isDirty()){
-				lowerLevelCache.writeLine(index, replacedLine);
+			if(toReplaceLine.getTag() != null && toReplaceLine.isDirty()){
+				lowerLevelCache.writeLine(index, toReplaceLine);
 			}
 			// Replace it
-			replacedLine = newCacheLine;
 			
-			return newCacheLine.getBlock(offset);
+			newCacheLine.setDirty(false);
+			lineSet.insert(replacedLineIndex, newCacheLine);
+			
+			return newCacheLine;
 		}
 		
 		numberOfHits++;
 		
-		CacheLine line = lineSet.getCacheLine(cacheLineIndex);
-		return line.getBlock(offset);
+		return lineSet.getCacheLine(cacheLineIndex);
 	}
 	
 	private void writeLine(int index, CacheLine replacedLine) {
@@ -121,14 +115,16 @@ public class Cache {
 		if(lineIndex == -1){
 			lowerLevelCache.writeLine(index, replacedLine);
 			
-			if(!isWriteAllocate){
-				CacheLine toReplaceLine = lineSet.getLineIndexToReplace();
+			if(isWriteAllocate){
+				int toReplaceLineIndex = lineSet.getLineIndexToReplace();
+				CacheLine toReplaceLine = lineSet.getCacheLine(toReplaceLineIndex);
+				
 				if(toReplaceLine.getTag() != null && toReplaceLine.isDirty()){
 					lowerLevelCache.writeLine(index, toReplaceLine);
 				}
 				
-				toReplaceLine = replacedLine;
-				toReplaceLine.setDirty(false);
+				replacedLine.setDirty(false);
+				lineSet.insert(toReplaceLineIndex, replacedLine);
 			}
 			
 			return;
@@ -136,8 +132,7 @@ public class Cache {
 		
 		numberOfHits++;
 		
-		CacheLine oldLine = lineSet.getCacheLine(lineIndex);
-		oldLine = replacedLine;
+		lineSet.insert(lineIndex, replacedLine);
 		
 		if(isWriteBack){
 			replacedLine.setDirty(true);
@@ -150,7 +145,53 @@ public class Cache {
 
 
 	public void writeData(int address, String value){
+		address *= 2;
 		
+		numberOfIssues++;
+		
+		int offset = address % lineSize;
+		int index = (address / lineSize) % (size / associativity);
+		int tag = address / (lineSize * size / associativity);
+		
+		CacheLineSet lineSet = dCache.get(index);
+		int cacheLineIndex = lineSet.searchTags(tag);
+		
+		if(cacheLineIndex == -1){
+			// Handle write miss
+			lowerLevelCache.writeData(address, value);
+			
+			if(isWriteAllocate){
+				CacheLine line = lowerLevelCache.readLine(address);
+				line.setBlock(offset, value);
+				
+				int toReplaceLineIndex = lineSet.getLineIndexToReplace();
+				CacheLine toReplaceLine = lineSet.getCacheLine(toReplaceLineIndex);
+				
+				if(toReplaceLine.getTag() != null && toReplaceLine.isDirty()){
+					lowerLevelCache.writeLine(index, toReplaceLine);
+				}
+				
+				line.setDirty(false);
+				lineSet.insert(toReplaceLineIndex, line);
+			}
+			
+			return;
+		}
+		
+		numberOfHits++;
+		
+		// Handle write hit
+		
+		CacheLine line = lineSet.getCacheLine(cacheLineIndex);
+		line.setBlock(offset, value);
+		
+		if(isWriteBack){
+			line.setDirty(true);
+		}
+		else{
+			line.setDirty(false);
+			lowerLevelCache.writeData(address, value);
+		}
 	}
 	
 	public double[] getStatistics(){

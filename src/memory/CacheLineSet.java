@@ -32,21 +32,16 @@ public class CacheLineSet {
 		return lineSet.get(index);
 	}
 	
-	public void insert(int index, String tag, ArrayList<String> value){
-		String currentTag = lineSet.get(index).getTag();
-		currentTag = tag;
-		
-		CacheLine currentLine = lineSet.get(index);
-		currentLine.setLine(value);
-		
+	public void insert(int index, CacheLine line){
+		lineSet.set(index, line);
 	}
 	
-	public CacheLine getLineIndexToReplace(){
+	public int getLineIndexToReplace(){
 		int notDirtyIndex = -1;
 		for(int q = 0; q < associativity; q++){
 			CacheLine line = lineSet.get(q);
 			if(line.getTag() == null){
-				return line;
+				return q;
 			}
 			if(notDirtyIndex == -1 && !line.isDirty()){
 				notDirtyIndex = q;
@@ -54,9 +49,9 @@ public class CacheLineSet {
 		}
 		
 		if(notDirtyIndex != -1){
-			return lineSet.get(notDirtyIndex);
+			return notDirtyIndex;
 		}
 		
-		return lineSet.get(0);
+		return 0;
 	}
 }
