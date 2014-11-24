@@ -50,6 +50,6 @@ public class Program {
 		// arraylist(i).second requests
 		ArrayList<Pair<Integer, Integer>> hitRatios;
 		hitRatios = new ArrayList<Pair<Integer, Integer>>();
-		new CacheHitWindow(hitRatios,amat);
+		new CacheHitWindow(hitRatios, amat);
 	}
 }
