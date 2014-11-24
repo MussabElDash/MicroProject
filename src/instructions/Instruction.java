@@ -14,16 +14,16 @@ public abstract class Instruction {
 		opcode = op;
 		for(int i = 0; i < target.length; i++) {
 			if(target[i].equals("regA")) {
-				regA = target[i];
+				regA = params[i];
 				regANum = mem.getRegisterId(regA);
 			} else if(target[i].equals("regB")) {
-				regB = target[i];
+				regB = params[i];
 				regBNum = mem.getRegisterId(regB);
 			} else if(target[i].equals("regC")) {
-				regC = target[i];
+				regC = params[i];
 				regCNum = mem.getRegisterId(regC);
 			} else if(target[i].equals("imm")) {
-				imm = target[i];
+				imm = params[i];
 				immValue = Integer.parseInt(imm);
 			} else {
 				System.out.println("Instruction Parameter Target Error: " + target[i]);
