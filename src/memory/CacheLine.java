@@ -2,8 +2,8 @@ package memory;
 
 import java.util.ArrayList;
 
-public class CacheLine {
-	private ArrayList<String> line = new ArrayList<String>();
+public class CacheLine<T> {
+	private ArrayList<T> line = new ArrayList<T>();
 	private int size;
 	private boolean dirty = false;
 	private String tag = null;
@@ -15,15 +15,15 @@ public class CacheLine {
 		}
 	}
 	
-	public void setLine(ArrayList<String> line){
+	public void setLine(ArrayList<T> line){
 		this.line = line;
 	}
 	
-	public String getBlock(int offset){
+	public T getBlock(int offset){
 		return line.get(offset);
 	}
 	
-	public void setBlock(int offset, String value){
+	public void setBlock(int offset, T value){
 		line.set(offset, value);
 	}
 	
