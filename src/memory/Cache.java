@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import utilities.CacheDetailsHolder;
+import utilities.Pair;
 
 public class Cache {
 	private HashMap<String, Instruction> iCache = new HashMap<String, Instruction>();
@@ -196,5 +197,24 @@ public class Cache {
 	
 	public double[] getStatistics(){
 		return null;
+	}
+
+
+	public ArrayList<Pair<Integer, Integer>> getCacheStats() {
+		ArrayList<Pair<Integer, Integer>> result = new ArrayList<Pair<Integer, Integer>>();
+		if(lowerLevelCache != null){
+			result = lowerLevelCache.getCacheStats();
+		}
+		result.add(0, new Pair<Integer, Integer>(new Integer(numberOfHits), new Integer(numberOfIssues)));
+		
+		return result;
+	}
+
+
+	public double getAMAT() {
+		if(lowerLevelCache == null){
+			return accessTime;
+		}
+		return numberOfHits * 1.0 / numberOfIssues * accessTime + (numberOfIssues - numberOfHits) * 1.0 / numberOfIssues * lowerLevelCache.getAMAT();
 	}
 }
