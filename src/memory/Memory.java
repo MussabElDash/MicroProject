@@ -55,7 +55,11 @@ public class Memory {
 	}
 	
 	public void setMemoryValue(int memoryAddress, int value){
-		cache.setValue(memoryAddress, value);
+		cache.setValue(memoryAddress, value, false);
+	}
+	
+	public void setMemoryValue(int memoryAddress, int value, boolean isInstruction){
+		cache.setValue(memoryAddress, value, isInstruction);
 	}
 	
 	public int getMemoryValue(int memoryAddress){
