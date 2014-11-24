@@ -36,7 +36,7 @@ public class Program {
 		for (int i = 0; i < numOfInstructions; i++) {
 			int val = memory.getRegisterValue("PC");
 			Instruction current = memory.getInstruction(val);
-			memory.setRegisterValue("PC", val + 4);
+			memory.setRegisterValue("PC", val + 1);
 			current.execute();
 		}
 	}
