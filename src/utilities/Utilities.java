@@ -11,9 +11,18 @@ public class Utilities {
 	}
 	
 	public static String getBinaryNumber(int num) {
-		int len = 0;
 		String res = Integer.toBinaryString(num);
-		int tot = res.length() - len;
-		return res.substring(tot);
+		while (res.length() != 32) {
+			res = "0" + res;
+		}
+		return res;
+	}
+	
+	public static String getBinaryNumber(int num, int len) {
+		String res = Integer.toBinaryString(num);
+		while (res.length() != 32) {
+			res = "0" + res;
+		}
+		return res.substring(32 - len);
 	}
 }

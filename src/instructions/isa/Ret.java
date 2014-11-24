@@ -1,5 +1,6 @@
 package instructions.isa;
 
+import utilities.Utilities;
 import instructions.Instruction;
 
 public class Ret extends Instruction {
@@ -16,8 +17,8 @@ public class Ret extends Instruction {
 
 	@Override
 	public String getMachineCode() {
-		// TODO Auto-generated method stub
-		return null;
+		return getOpcode() + Utilities.getBinaryNumber(getRegANum(), 3)
+				+ Utilities.getBinaryNumber(getImmValue(), 10);
 	}
 
 }

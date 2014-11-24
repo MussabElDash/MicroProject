@@ -18,8 +18,8 @@ public class Jalr extends Instruction {
 
 	@Override
 	public String getMachineCode() {
-		return getOpcode() + Utilities.getBinaryNumber(getRegANum())
-				+ Utilities.getBinaryNumber(getRegBNum()) + "0000000";
+		return getOpcode() + Utilities.getBinaryNumber(getRegANum(), 3)
+				+ Utilities.getBinaryNumber(getRegBNum(), 3) + "0000000";
 	}
 
 }

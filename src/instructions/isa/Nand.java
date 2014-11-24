@@ -1,5 +1,6 @@
 package instructions.isa;
 
+import utilities.Utilities;
 import instructions.Instruction;
 
 public class Nand extends Instruction {
@@ -15,8 +16,8 @@ public class Nand extends Instruction {
 
 	@Override
 	public String getMachineCode() {
-		// TODO Auto-generated method stub
-		return null;
+		return getOpcode() + Utilities.getBinaryNumber(getRegANum(), 3)
+				+ Utilities.getBinaryNumber(getRegBNum(), 3) + "0000"
+				+ Utilities.getBinaryNumber(getRegCNum(), 3);
 	}
-
 }

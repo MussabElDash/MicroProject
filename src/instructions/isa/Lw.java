@@ -16,9 +16,9 @@ public class Lw extends Instruction {
 
 	@Override
 	public String getMachineCode() {
-		return getOpcode() + Utilities.getBinaryNumber(getRegANum())
-				+ Utilities.getBinaryNumber(getRegBNum())
-				+ Utilities.getBinaryNumber(getImmValue());
+		return getOpcode() + Utilities.getBinaryNumber(getRegANum(), 3)
+				+ Utilities.getBinaryNumber(getRegBNum(), 3)
+				+ Utilities.getBinaryNumber(getImmValue(), 7);
 	}
 
 }
