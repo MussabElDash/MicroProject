@@ -43,14 +43,14 @@ public class Program {
 			Instruction current = memory.getInstruction(val);
 			memory.setRegisterValue("PC", val + 1);
 			current.execute();
-			numOfInstructions ++;
-		} while(val != endAddress);
+			numOfInstructions++;
+		} while (val != endAddress);
 	}
 
 	public void afterExec() {
 		RegistersTable.updateRegisters();
 		double amat = memory.getAMAT();
 		ArrayList<Pair<Integer, Integer>> hitRatios = memory.getCacheStats();
-		new CacheHitWindow(hitRatios, amat);
+		new CacheHitWindow(hitRatios, amat, numOfInstructions);
 	}
 }
