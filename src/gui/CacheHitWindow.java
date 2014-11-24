@@ -20,7 +20,9 @@ public class CacheHitWindow extends JFrame {
 	private JPanel contentPane;
 
 	public static void main(String[] args) {
-		new CacheHitWindow(null, 5.3);
+		ArrayList<Pair<Integer, Integer>> arr = new ArrayList<>();
+		arr.add(new Pair<Integer, Integer>(5, 10));
+		new CacheHitWindow(arr, 5.3);
 	}
 
 	/**
