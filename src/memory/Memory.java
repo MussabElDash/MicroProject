@@ -10,14 +10,14 @@ public class Memory {
 	private Cache cache = null;
 	private Register[] registers = new Register[8];
 	
-	public static Memory getInstance(){
+	public static Memory getInstance(CacheDetailsHolder caches, int mainMemoryAccessTime){
 		if (rootMemory == null) {
-			rootMemory = new Memory();
+			rootMemory = new Memory(caches, mainMemoryAccessTime);
 		}
 		return rootMemory;
 	}
 	
-	private Memory(CacheDetailsHolder caches, int mainMemorySize) {
+	private Memory(CacheDetailsHolder caches, int mainMemoryAccessTime) {
 		cache = new Cache(caches);
 	}
 	
