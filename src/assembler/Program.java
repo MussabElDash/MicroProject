@@ -45,10 +45,11 @@ public class Program {
 
 	public void afterExec() {
 		RegistersTable.updateRegisters();
+		double amat = 0;
 		// arraylist(i).first Hit
 		// arraylist(i).second requests
 		ArrayList<Pair<Integer, Integer>> hitRatios;
 		hitRatios = new ArrayList<Pair<Integer, Integer>>();
-		 new CacheHitWindow(hitRatios);
+		new CacheHitWindow(hitRatios,amat);
 	}
 }
