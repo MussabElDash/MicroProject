@@ -1,22 +1,29 @@
 package memory;
 
+import utilities.CacheDetailsHolder;
 import utilities.Utilities;
 
 public class Memory {
 	public static int NOT_FOUND_VALUE = -1111111111;
-	private static Memory rootMemory = new Memory();
-
+	private static Memory rootMemory = null;
+	
 	private Cache cache = null;
 	private Register[] registers = new Register[8];
-	private int instructionsStartAddress;
-
-	public static Memory getInstance() {
+	
+	public static Memory getInstance(){
+		if (rootMemory == null) {
+			rootMemory = new Memory();
+		}
 		return rootMemory;
 	}
-
-	public int getRegisterId(String registerTitle) {
-		for (int q = 0; q < 8; q++) {
-			if (registers[q].getTitle().equals(registerTitle)) {
+	
+	private Memory(CacheDetailsHolder caches, int mainMemorySize) {
+		cache = new Cache(caches);
+	}
+	
+	public int getRegisterId(String registerTitle){
+		for(int q = 0; q < 8; q++){
+			if(registers[q].getTitle().equals(registerTitle)){
 				return q;
 			}
 		}
@@ -45,12 +52,12 @@ public class Memory {
 
 		return registers[registerId].getValue();
 	}
-
-	public void setMemoryValue(int memoryAddress, int value) {
-
+	
+	public void setMemoryValue(int memoryAddress, int value){
+		cache.setValue(memoryAddress, value);
 	}
-
-	public int getMemoryValue(int memoryAddress) {
-		return 0;
+	
+	public int getMemoryValue(int memoryAddress){
+		return cache.getValue(memoryAddress);
 	}
 }
