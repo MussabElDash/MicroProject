@@ -5,7 +5,7 @@ import utilities.Utilities;
 
 public class Beq extends Instruction {
 
-	protected Beq(String[] params) {
+	public Beq(String[] params) {
 		super(params, new String[] { "regA", "regB", "imm" }, "0110");
 	}
 

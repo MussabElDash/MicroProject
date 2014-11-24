@@ -5,9 +5,8 @@ import instructions.Instruction;
 
 public class Ret extends Instruction {
 
-	protected Ret(String[] params) {
+	public Ret(String[] params) {
 		super(params, new String[]{"regA"}, "1010");
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

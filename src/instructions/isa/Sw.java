@@ -5,7 +5,7 @@ import instructions.Instruction;
 
 public class Sw extends Instruction {
 
-	protected Sw(String[] params) {
+	public Sw(String[] params) {
 		super(params, new String[] { "regA", "regB", "imm" }, "0100");
 	}
 

@@ -5,7 +5,7 @@ import instructions.Instruction;
 
 public class Sub extends Instruction {
 
-	protected Sub(String[] params) {
+	public Sub(String[] params) {
 		super(params, new String[]{"regA", "regB", "regC"}, "1011");
 	}
 

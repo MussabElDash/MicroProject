@@ -5,7 +5,7 @@ import utilities.Utilities;
 
 public class Add extends Instruction {
 
-	protected Add(String[] params) {
+	public Add(String[] params) {
 		super(params, new String[] { "regA", "regB", "regC" }, "0000");
 	}
 

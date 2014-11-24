@@ -5,7 +5,7 @@ import instructions.Instruction;
 
 public class Jmp extends Instruction {
 
-	protected Jmp(String[] params) {
+	public Jmp(String[] params) {
 		super(params, new String[]{"regA", "imm"}, "1000");
 	}
 

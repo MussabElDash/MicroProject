@@ -5,7 +5,7 @@ import instructions.Instruction;
 
 public class Nand extends Instruction {
 
-	protected Nand(String[] params) {
+	public Nand(String[] params) {
 		super(params, new String[]{"regA", "regB", "regC"}, "0010");
 	}
 
