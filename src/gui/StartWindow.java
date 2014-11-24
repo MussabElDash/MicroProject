@@ -4,33 +4,16 @@ import java.awt.EventQueue;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JTextPane;
-import javax.swing.JTable;
+
+import utilities.CacheDetailsHolder;
 
 public class StartWindow {
 
 	private JFrame frmMicro;
 
 	private JComponent currentPanel;
-	private int memAccessTime = 0, cacheLvl = 1, memorySize, CacheSizes[];
-
-	public int getMemorySize() {
-		return memorySize;
-	}
-
-	public void setMemorySize(int memorySize) {
-		this.memorySize = memorySize;
-	}
-
-	public int[] getCacheSizes() {
-		return CacheSizes;
-	}
-
-	public void setCacheSizes(int[] cacheSizes) {
-		CacheSizes = cacheSizes;
-	}
+	private int memAccessTime = 0, cacheLvl = 1;
+	private CacheDetailsHolder[] caches;
 
 	public JComponent getcurrentPanel() {
 		return currentPanel;
@@ -55,7 +38,7 @@ public class StartWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StartWindow window = new StartWindow();
+					new StartWindow();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -90,5 +73,21 @@ public class StartWindow {
 
 	public void setMemAccessTime(int memAccessTime) {
 		this.memAccessTime = memAccessTime;
+	}
+
+	public void changeCurrentPanel(JComponent panel) {
+		frmMicro.remove(currentPanel);
+		currentPanel = panel;
+		frmMicro.getContentPane().add(currentPanel);
+		frmMicro.repaint();
+		frmMicro.revalidate();
+	}
+
+	public CacheDetailsHolder[] getCaches() {
+		return caches;
+	}
+
+	public void setCaches(CacheDetailsHolder[] caches) {
+		this.caches = caches;
 	}
 }

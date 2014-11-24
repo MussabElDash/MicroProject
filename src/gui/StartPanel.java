@@ -1,22 +1,18 @@
 package gui;
 
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.text.Format;
 
 public class StartPanel extends JPanel {
 
@@ -70,12 +66,7 @@ public class StartPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				startWindow.setCacheLvl(Integer.parseInt(textField.getText()));
 				startWindow.setMemAccessTime(Integer.parseInt(time.getText()));
-				frmMicro.remove(startWindow.getcurrentPanel());
-				startWindow.setcurrentPanel(new MemoryPanel(startWindow,
-						frmMicro));
-				frmMicro.getContentPane().add(startWindow.getcurrentPanel());
-				frmMicro.repaint();
-				frmMicro.revalidate();
+				startWindow.changeCurrentPanel(new MemoryPanel(startWindow));
 			}
 		});
 

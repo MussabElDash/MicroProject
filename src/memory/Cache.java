@@ -19,6 +19,9 @@ public class Cache {
 		this.isWriteBack = isWriteBack;
 		this.isWriteAllocate = isWriteAllocate;
 		this.accessTime = accessTime;
+		this.size = size;
+		this.lineSize = lineSize;
+		this.associativity = associativity;
 	}
 
 
