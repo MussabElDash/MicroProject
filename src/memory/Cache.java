@@ -42,7 +42,7 @@ public class Cache {
 		this.lowerLevelCache = lowerLevelCache;
 	}
 	
-	public int getValue(int address){
+	public int getValue(int address, boolean isInstruction){
 		return 0;
 	}
 	

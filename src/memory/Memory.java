@@ -63,6 +63,10 @@ public class Memory {
 	}
 	
 	public int getMemoryValue(int memoryAddress){
-		return cache.getValue(memoryAddress);
+		return cache.getValue(memoryAddress, false);
+	}
+	
+	public int getMemoryValue(int memoryAddress, boolean isInstruction){
+		return cache.getValue(memoryAddress, isInstruction);
 	}
 }
