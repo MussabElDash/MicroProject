@@ -11,11 +11,11 @@ public class Ret extends Instruction {
 
 	@Override
 	public void execute() {
-		mem.setRegister("PC", mem.getRegister(regA));
+		mem.setRegisterValue("PC", mem.getRegisterValue(regA));
 	}
 
 	@Override
-	public String machinecode() {
+	public String getMachineCode() {
 		// TODO Auto-generated method stub
 		return null;
 	}

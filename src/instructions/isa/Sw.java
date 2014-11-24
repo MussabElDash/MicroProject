@@ -10,11 +10,11 @@ public class Sw extends Instruction {
 
 	@Override
 	public void execute() {
-		mem.setMemoryValue(mem.getRegister(regB)+immValue, mem.getRegister(regA));
+		mem.setMemoryValue(mem.getRegisterValue(regB)+immValue, mem.getRegisterValue(regA));
 	}
 
 	@Override
-	public String machinecode() {
+	public String getMachineCode() {
 		// TODO Auto-generated method stub
 		return null;
 	}

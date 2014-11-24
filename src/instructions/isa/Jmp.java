@@ -1,5 +1,6 @@
 package instructions.isa;
 
+import utilities.Utilities;
 import instructions.Instruction;
 
 public class Jmp extends Instruction {
@@ -11,14 +12,14 @@ public class Jmp extends Instruction {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		mem.setRegister("PC", mem.getRegister("PC") + 1 + mem.getRegister(regA) + immValue);
+		mem.setRegisterValue("PC", mem.getRegisterValue("PC") + 1 + mem.getRegisterValue(regA) + immValue);
 
 	}
 
 	@Override
-	public String machinecode() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getMachineCode() {
+		return getOpcode() + Utilities.getBinaryNumber(getRegANum())
+				+ Utilities.getBinaryNumber(getImmValue());
 	}
 
 }

@@ -11,7 +11,7 @@ public class Add extends Instruction {
 
 	@Override
 	public void execute() {
-		mem.setRegister(regA, mem.getRegister(regB) + mem.getRegister(regC));
+		mem.setRegisterValue(regA, mem.getRegisterValue(regB) + mem.getRegisterValue(regC));
 	}
 
 	@Override

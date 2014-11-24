@@ -15,13 +15,13 @@ public abstract class Instruction {
 		for(int i = 0; i < target.length; i++) {
 			if(target[i].equals("regA")) {
 				regA = target[i];
-				regANum = mem.getRegisterNumber(regA);
+				regANum = mem.getRegisterId(regA);
 			} else if(target[i].equals("regB")) {
 				regB = target[i];
-				regBNum = mem.getRegisterNumber(regB);
+				regBNum = mem.getRegisterId(regB);
 			} else if(target[i].equals("regC")) {
 				regC = target[i];
-				regCNum = mem.getRegisterNumber(regC);
+				regCNum = mem.getRegisterId(regC);
 			} else if(target[i].equals("imm")) {
 				imm = target[i];
 				immValue = Integer.parseInt(imm);

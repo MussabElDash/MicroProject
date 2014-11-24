@@ -11,8 +11,8 @@ public class Beq extends Instruction {
 
 	@Override
 	public void execute() {
-		if (mem.getRegister(regA) == mem.getRegister(regB))
-			mem.setRegister("PC", mem.getRegister("PC") + 1 + immValue);
+		if (mem.getRegisterValue(regA) == mem.getRegisterValue(regB))
+			mem.setRegisterValue("PC", mem.getRegisterValue("PC") + 1 + immValue);
 	}
 
 	@Override

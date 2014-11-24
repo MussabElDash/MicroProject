@@ -10,11 +10,11 @@ public class Mul extends Instruction {
 
 	@Override
 	public void execute() {
-		mem.setRegister(regA, mem.getRegister(regB)*mem.getRegister(regC));
+		mem.setRegisterValue(regA, mem.getRegisterValue(regB)*mem.getRegisterValue(regC));
 	}
 
 	@Override
-	public String machinecode() {
+	public String getMachineCode() {
 		// TODO Auto-generated method stub
 		return null;
 	}
