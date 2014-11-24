@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 import utilities.CacheDetailsHolder;
+import gui.CacheHitWindow;
+import gui.RegistersTable;
 import instructions.Instruction;
 import memory.Memory;
 
@@ -35,5 +37,10 @@ public class Program {
 					true);
 			address += 4;
 		}
+	}
+
+	public static void afterExec() {
+		RegistersTable.updateRegisters();
+		new CacheHitWindow();
 	}
 }

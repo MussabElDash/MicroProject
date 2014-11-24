@@ -40,6 +40,10 @@ public class CacheHitWindow extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		int x = 4; // to be edited
+		for (int i = 1; i <= x; i++) {
+			contentPane.add(new CacheHitPanel(i, 5, 10));
+		}
 
 		JScrollPane scrollPane = new JScrollPane(contentPane);
 		setContentPane(scrollPane);
