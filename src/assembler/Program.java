@@ -10,9 +10,9 @@ import instructions.Instruction;
 import memory.Memory;
 
 public class Program {
-	Instruction[] instructions;
 	Memory memory;
 	int startAddress;
+	int numOfInstructions;
 
 	public Program(String code, int startAddress, int MemAccessTime,
 			CacheDetailsHolder[] cacheDetails,
@@ -22,16 +22,23 @@ public class Program {
 			caches.add(cacheDetails[i]);
 		}
 		String[] lines = code.split("\n");
-		instructions = Assembler.assembleProgram(lines);
+		Instruction[] instructions = Assembler.assembleProgram(lines);
 		memory = Memory.getInstance();
 		memory.initialize(caches, MemAccessTime, instructions, startAddress,
 				editedAddress);
 		this.startAddress = startAddress;
+		this.numOfInstructions = instructions.length;
 		this.execute();
 	}
 
 	public void execute() {
-
+		memory.setRegisterValue("PC", startAddress);
+		for (int i = 0; i < numOfInstructions; i++) {
+			int val = memory.getRegisterValue("PC");
+			Instruction current = memory.getInstruction(val);
+			memory.setRegisterValue("PC", val + 4);
+			current.execute();
+		}
 	}
 
 	public static void afterExec() {
