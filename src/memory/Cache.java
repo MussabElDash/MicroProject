@@ -36,20 +36,21 @@ public class Cache {
 		this.lineSize = details.getLineSize();
 		this.associativity = details.getAssociativity();
 		
+		for(int q = 0; q < size; q++){
+			dCache.put(q + "", new CacheLineSet<String>(associativity, lineSize));
+			iCache.put(q + "", new CacheLineSet<Instruction>(associativity, lineSize));
+		}
+		
 		if(caches.size() > 1){
 			caches.remove(0);
 			lowerLevelCache = new Cache(caches, instruction, instructionStartAddress, data);
 			return;
 		}
 		
-		for(int q = 0; q < size; q++){
-			dCache.put(q + "", new CacheLineSet<String>(associativity, lineSize));
-			iCache.put(q + "", new CacheLineSet<Instruction>(associativity, lineSize));
-		}
-		
 		for(int q = 0; q < instruction.length; q++){
 			CacheLine<Instruction> line = new CacheLine<Instruction>(lineSize);
 			line.setBlock(0, instruction[q]);
+			line.setTag("0");
 			
 			CacheLineSet<Instruction> lineSet = new CacheLineSet<Instruction>(associativity, lineSize);
 			lineSet.insert(0, line);
@@ -63,6 +64,7 @@ public class Cache {
 			
 			CacheLine<String> line = new CacheLine<String>(lineSize);
 			line.setBlock(0, value);
+			line.setTag("0");
 			
 			CacheLineSet<String> lineSet = new CacheLineSet<String>(associativity, lineSize);
 			lineSet.insert(0, line);
@@ -85,14 +87,14 @@ public class Cache {
 		int index = (address / lineSize) % (size / associativity);
 		int tag = address / (lineSize * size / associativity);
 		
-		CacheLineSet<Instruction> lineSet = iCache.get(index);
+		CacheLineSet<Instruction> lineSet = iCache.get(index + "");
 		int cacheLineIndex = lineSet.searchTags(tag);
 		
 		if(cacheLineIndex == -1){
 			// Handle read miss
 			CacheLine<Instruction> newCacheLine = lowerLevelCache.readInstructionLine(address);
 			
-			// Get replaces Line
+			// Get replaced Line
 			int replacedLineIndex = lineSet.getLineIndexToReplace();
 			CacheLine<Instruction> toReplaceLine = lineSet.getCacheLine(replacedLineIndex);
 			
@@ -100,8 +102,8 @@ public class Cache {
 			if(toReplaceLine.getTag() != null && toReplaceLine.isDirty()){
 				lowerLevelCache.writeInstructionLine(index, toReplaceLine);
 			}
-			// Replace it
 			
+			// Replace it
 			newCacheLine.setDirty(false);
 			lineSet.insert(replacedLineIndex, newCacheLine);
 			
@@ -117,7 +119,7 @@ public class Cache {
 			CacheLine<Instruction> replacedLine) {
 		numberOfIssues++;
 		
-		CacheLineSet<Instruction> lineSet = iCache.get(index);
+		CacheLineSet<Instruction> lineSet = iCache.get(index + "");
 		int lineIndex = lineSet.searchTags(replacedLine.getTag());
 		
 		if(lineIndex == -1){
@@ -164,7 +166,7 @@ public class Cache {
 		int index = (address / lineSize) % (size / associativity);
 		int tag = address / (lineSize * size / associativity);
 		
-		CacheLineSet<String> lineSet = dCache.get(index);
+		CacheLineSet<String> lineSet = dCache.get(index + "");
 		int cacheLineIndex = lineSet.searchTags(tag);
 		
 		if(cacheLineIndex == -1){
@@ -195,7 +197,7 @@ public class Cache {
 	private void writeLine(int index, CacheLine<String> replacedLine) {
 		numberOfIssues++;
 		
-		CacheLineSet<String> lineSet = dCache.get(index);
+		CacheLineSet<String> lineSet = dCache.get(index + "");
 		int lineIndex = lineSet.searchTags(replacedLine.getTag());
 		
 		if(lineIndex == -1){
@@ -239,7 +241,7 @@ public class Cache {
 		int index = (address / lineSize) % (size / associativity);
 		int tag = address / (lineSize * size / associativity);
 		
-		CacheLineSet<String> lineSet = dCache.get(index);
+		CacheLineSet<String> lineSet = dCache.get(index + "");
 		int cacheLineIndex = lineSet.searchTags(tag);
 		
 		if(cacheLineIndex == -1){

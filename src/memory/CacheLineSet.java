@@ -20,7 +20,8 @@ public class CacheLineSet<T> {
 	// Returns -1 if not found
 	public int searchTags(String tag){
 		for(int q = 0; q < associativity; q++){
-			if(lineSet.get(q).getTag().equals(tag)){
+			String currentTag = lineSet.get(q).getTag();
+			if(currentTag != null && currentTag.equals(tag)){
 				return q;
 			}
 		}
