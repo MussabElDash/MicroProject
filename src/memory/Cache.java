@@ -42,7 +42,7 @@ public class Cache {
 		this.lowerLevelCache = lowerLevelCache;
 	}
 	
-	public int getValue(int address, boolean isInstruction){
+	public String getValue(int address, boolean isInstruction){
 		numberOfIssues++;
 		//HashMap<String String> cache = iCache;
 		if(isInstruction){
@@ -51,13 +51,13 @@ public class Cache {
 		else{
 			if(dCache.containsKey(address + "")){
 				numberOfHits++;
-				return Integer.parseInt(dCache.get(address + ""));
+				return dCache.get(address + "");
 			}
 			else{
 				/// Handle read miss
 			}
 		}
-		return 0;
+		return "";
 	}
 	
 	public void setValue(int address, String value, boolean isInstruction){
