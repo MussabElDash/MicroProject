@@ -26,10 +26,7 @@ public class Cache {
 					int associativity, 
 					boolean isWriteBack, 
 					boolean isWriteAllocate, 
-					int accessTime, 
-					Instruction[] instruction, 
-					int instructionStartAddress, 
-					HashMap<Integer, Integer> data){
+					int accessTime){
 		
 		this.isWriteBack = isWriteBack;
 		this.isWriteAllocate = isWriteAllocate;
@@ -40,7 +37,10 @@ public class Cache {
 	}
 
 
-	public Cache(ArrayList<CacheDetailsHolder> caches) {
+	public Cache(	ArrayList<CacheDetailsHolder> caches,
+					Instruction[] instruction, 
+					int instructionStartAddress, 
+					HashMap<Integer, Integer> data) {
 		// TODO Auto-generated constructor stub
 	}
 	
