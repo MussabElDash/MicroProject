@@ -1,12 +1,14 @@
 package memory;
 
+import instructions.Instruction;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import utilities.CacheDetailsHolder;
 
 public class Cache {
-	private HashMap<String, String> iCache = new HashMap<String, String>();
+	private HashMap<String, Instruction> iCache = new HashMap<String, Instruction>();
 	private HashMap<String, String> dCache = new HashMap<String, String>();
 	private Cache lowerLevelCache = null;
 	private boolean isWriteBack = false;
@@ -42,25 +44,50 @@ public class Cache {
 		this.lowerLevelCache = lowerLevelCache;
 	}
 	
-	public String getValue(int address, boolean isInstruction){
+	public Instruction readInstruction(int address){
 		numberOfIssues++;
-		//HashMap<String String> cache = iCache;
-		if(isInstruction){
-			/// Handle fetching instruction
+		Instruction result = iCache.get(address + "");
+		
+		if(result == null){
+			// Handle read miss
+			result = lowerLevelCache.readInstruction(address);
+			insertInstruction(address, result);
 		}
 		else{
-			if(dCache.containsKey(address + "")){
-				numberOfHits++;
-				return dCache.get(address + "");
-			}
-			else{
-				/// Handle read miss
-			}
+			numberOfHits++;
 		}
-		return "";
+		
+		return result;
 	}
 	
-	public void setValue(int address, String value, boolean isInstruction){
+	private void insertInstruction(int address, Instruction result) {
+		
+	}
+
+
+	public String readData(int address){
+		numberOfIssues++;
+		String result = dCache.get(address + "");
+		
+		if(result == null){
+			// Handle read miss
+			result = lowerLevelCache.readData(address);
+			insertData(address, result);
+		}
+		else{
+			numberOfHits++;
+		}
+		
+		return result;
+	}
+	
+	private void insertData(int address, String result) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void writeData(int address, String value){
 		
 	}
 
