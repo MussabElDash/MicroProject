@@ -16,9 +16,9 @@ public class Add extends Instruction {
 
 	@Override
 	public String getMachineCode() {
-		return getOpcode() + Utilities.getBinaryNumber(getRegANum())
-				+ Utilities.getBinaryNumber(getRegBNum()) + "0000"
-				+ Utilities.getBinaryNumber(getRegCNum());
+		return getOpcode() + Utilities.getBinaryNumber(getRegANum(), 3)
+				+ Utilities.getBinaryNumber(getRegBNum(), 3) + "0000"
+				+ Utilities.getBinaryNumber(getRegCNum(), 3);
 	}
 
 }
