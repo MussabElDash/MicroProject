@@ -64,4 +64,8 @@ public class Memory {
 	public String getMemoryValue(int memoryAddress){
 		return cache.readData(memoryAddress);
 	}
+	
+	public Instruction getInstruction(int memoryAddress) {
+		return cache.readInstruction(memoryAddress);
+	}
 }
