@@ -55,18 +55,10 @@ public class Memory {
 	}
 	
 	public void setMemoryValue(int memoryAddress, String value){
-		this.setMemoryValue(memoryAddress, value, false);
-	}
-	
-	public void setMemoryValue(int memoryAddress, String value, boolean isInstruction){
-		cache.setValue(memoryAddress, value, isInstruction);
+		cache.writeData(memoryAddress, value);
 	}
 	
 	public String getMemoryValue(int memoryAddress){
-		return this.getMemoryValue(memoryAddress, false);
-	}
-	
-	public String getMemoryValue(int memoryAddress, boolean isInstruction){
-		return cache.getValue(memoryAddress, isInstruction);
+		return cache.readData(memoryAddress);
 	}
 }

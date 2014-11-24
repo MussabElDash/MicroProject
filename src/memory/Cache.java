@@ -8,8 +8,9 @@ import java.util.HashMap;
 import utilities.CacheDetailsHolder;
 
 public class Cache {
-	private HashMap<String, Instruction> iCache = new HashMap<String, Instruction>();
-	private HashMap<String, String> dCache = new HashMap<String, String>();
+	private HashMap<String, ArrayList<ArrayList<Instruction>>> iCache = new HashMap<String, ArrayList<ArrayList<Instruction>>>();
+	private HashMap<String, ArrayList<ArrayList<String>>> dCache = new HashMap<String, ArrayList<ArrayList<String>>>();
+	private HashMap<String, Boolean> isDirty = new HashMap<String, Boolean>();
 	private Cache lowerLevelCache = null;
 	private boolean isWriteBack = false;
 	private boolean isWriteAllocate = false;
@@ -33,31 +34,26 @@ public class Cache {
 	public Cache(ArrayList<CacheDetailsHolder> caches) {
 		// TODO Auto-generated constructor stub
 	}
-
-
-	public Cache getLowerLevelCache() {
-		return lowerLevelCache;
-	}
-
-
-	public void setLowerLevelCache(Cache lowerLevelCache) {
-		this.lowerLevelCache = lowerLevelCache;
-	}
 	
 	public Instruction readInstruction(int address){
 		numberOfIssues++;
-		Instruction result = iCache.get(address + "");
+		
+		int offset = address % lineSize;
+		int index = (address / lineSize) % (size / associativity);
+		int tag = address / (lineSize * size / associativity);
+		
+		ArrayList<ArrayList<Instruction>> result = iCache.get(index + "");
 		
 		if(result == null){
 			// Handle read miss
-			result = lowerLevelCache.readInstruction(address);
-			insertInstruction(address, result);
+			//result = lowerLevelCache.readInstruction(address);
+			//insertInstruction(address, result);
 		}
 		else{
 			numberOfHits++;
 		}
 		
-		return result;
+		return null;
 	}
 	
 	private void insertInstruction(int address, Instruction result) {
@@ -67,22 +63,22 @@ public class Cache {
 
 	public String readData(int address){
 		numberOfIssues++;
-		String result = dCache.get(address + "");
+		ArrayList<ArrayList<String>> result = dCache.get(address + "");
 		
 		if(result == null){
 			// Handle read miss
-			result = lowerLevelCache.readData(address);
-			insertData(address, result);
+		//	result = lowerLevelCache.readData(address);
+			//insertData(address, result);
 		}
 		else{
 			numberOfHits++;
 		}
 		
-		return result;
+		return null;
 	}
 	
 	private void insertData(int address, String result) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -90,5 +86,8 @@ public class Cache {
 	public void writeData(int address, String value){
 		
 	}
-
+	
+	public void initializeMainMemory(Instruction[] instruction, int instructionStartAddress, HashMap<Integer, Integer> data){
+		
+	}
 }
