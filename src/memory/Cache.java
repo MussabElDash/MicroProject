@@ -57,7 +57,6 @@ public class Cache {
 				/// Handle read miss
 			}
 		}
-		
 		return 0;
 	}
 	
