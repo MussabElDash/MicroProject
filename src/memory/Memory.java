@@ -21,7 +21,7 @@ public class Memory {
 	
 	public void initialize(ArrayList<CacheDetailsHolder> caches, int mainMemoryAccessTime, Instruction[] instructions, int startAddress, HashMap<Integer, Integer> data) {
 		caches.add(new CacheDetailsHolder(65536, 1, 1, false, false, mainMemoryAccessTime));
-		cache = new Cache(caches);
+		cache = new Cache(caches, instructions, startAddress, data);
 		registers = new Register[8];
 	}
 	
