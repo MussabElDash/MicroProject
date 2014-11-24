@@ -25,4 +25,9 @@ public class Utilities {
 		}
 		return res.substring(32 - len);
 	}
+
+	public static int getDecimalNumber(String memoryValue) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
