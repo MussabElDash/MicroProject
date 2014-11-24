@@ -24,6 +24,10 @@ public class Memory {
 		caches.add(new CacheDetailsHolder(65536, 1, 1, false, false, mainMemoryAccessTime));
 		cache = new Cache(caches, instructions, startAddress, data);
 		registers = new Register[8];
+		for (int i=0; i<7; i++) {
+			registers[i] = new Register((i == 0), ("R" + i));
+		}
+		registers[7] = new Register(false, "PC");
 	}
 	
 	public int getRegisterId(String registerTitle){
