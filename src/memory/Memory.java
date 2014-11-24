@@ -62,11 +62,11 @@ public class Memory {
 		cache.setValue(memoryAddress, value, isInstruction);
 	}
 	
-	public int getMemoryValue(int memoryAddress){
+	public String getMemoryValue(int memoryAddress){
 		return this.getMemoryValue(memoryAddress, false);
 	}
 	
-	public int getMemoryValue(int memoryAddress, boolean isInstruction){
+	public String getMemoryValue(int memoryAddress, boolean isInstruction){
 		return cache.getValue(memoryAddress, isInstruction);
 	}
 }
