@@ -8,7 +8,7 @@ public class Memory {
 	private static Memory rootMemory = null;
 	
 	private Cache cache = null;
-	private Register[] registers = new Register[8];
+	private Register[] registers = null;
 	
 	public static Memory getInstance(CacheDetailsHolder caches, int mainMemoryAccessTime){
 		if (rootMemory == null) {
@@ -19,6 +19,7 @@ public class Memory {
 	
 	private Memory(CacheDetailsHolder caches, int mainMemoryAccessTime) {
 		cache = new Cache(caches);
+		registers = new Register[8];
 	}
 	
 	public int getRegisterId(String registerTitle){
