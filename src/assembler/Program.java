@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 import utilities.CacheDetailsHolder;
+import utilities.Pair;
 import gui.CacheHitWindow;
 import gui.RegistersTable;
 import instructions.Instruction;
@@ -41,11 +42,12 @@ public class Program {
 		}
 	}
 
-	public static void afterExec() {
+	public void afterExec() {
 		RegistersTable.updateRegisters();
-		// arraylist<Pair<Integer>>
 		// arraylist(i).first Hit
 		// arraylist(i).second requests
-		// new CacheHitWindow(arraylist);
+		ArrayList<Pair<Integer, Integer>> hitRatios;
+		hitRatios = new ArrayList<Pair<Integer, Integer>>();
+		 new CacheHitWindow(hitRatios);
 	}
 }
