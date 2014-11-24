@@ -48,7 +48,7 @@ public class MemoryPanel extends JScrollPane {
 				for (int i = 0; i < caches.length; i++)
 					caches[i] = cachePanels[i].getCache();
 				startWindow.setCaches(caches);
-//				startWindow.changeCurrentPanel(new MemoryPanel(startWindow));
+				startWindow.changeCurrentPanel(new MainPanel(startWindow));
 			}
 		});
 		panel_1.add(btnNewButton);

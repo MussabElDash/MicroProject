@@ -28,29 +28,29 @@ public class Memory {
 				return q;
 			}
 		}
-		
+
 		return NOT_FOUND_VALUE;
 	}
-	
-	public void setRegisterValue(String registerTitle, int value){
+
+	public void setRegisterValue(String registerTitle, int value) {
 		int registerId = getRegisterId(registerTitle);
-		
-		if(registerId == NOT_FOUND_VALUE){
+
+		if (registerId == NOT_FOUND_VALUE) {
 			Utilities.raiseError("Register " + registerTitle + " not found!");
 			return;
 		}
-		
+
 		registers[registerId].setValue((short) value);
 	}
-	
-	public int getRegisterValue(String registerTitle){
+
+	public int getRegisterValue(String registerTitle) {
 		int registerId = getRegisterId(registerTitle);
-		
-		if(registerId == NOT_FOUND_VALUE){
+
+		if (registerId == NOT_FOUND_VALUE) {
 			Utilities.raiseError("Register " + registerTitle + " not found!");
 			return NOT_FOUND_VALUE;
 		}
-		
+
 		return registers[registerId].getValue();
 	}
 	
