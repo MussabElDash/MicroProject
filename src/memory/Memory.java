@@ -1,17 +1,24 @@
 package memory;
 
+import utilities.CacheDetailsHolder;
 import utilities.Utilities;
 
 public class Memory {
 	public static int NOT_FOUND_VALUE = -1111111111;
-	private static Memory rootMemory = new Memory();
+	private static Memory rootMemory = null;
 	
 	private Cache cache = null;
 	private Register[] registers = new Register[8];
-	private int instructionsStartAddress;
 	
 	public static Memory getInstance(){
+		if (rootMemory == null) {
+			rootMemory = new Memory();
+		}
 		return rootMemory;
+	}
+	
+	private Memory(CacheDetailsHolder caches, int mainMemorySize) {
+		cache = new Cache(caches);
 	}
 	
 	public int getRegisterId(String registerTitle){
@@ -47,10 +54,10 @@ public class Memory {
 	}
 	
 	public void setMemoryValue(int memoryAddress, int value){
-		
+		cache.setValue(memoryAddress, value);
 	}
 	
 	public int getMemoryValue(int memoryAddress){
-		return 0;
+		return cache.getValue(memoryAddress);
 	}
 }

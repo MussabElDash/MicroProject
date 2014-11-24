@@ -2,6 +2,8 @@ package memory;
 
 import java.util.HashMap;
 
+import utilities.CacheDetailsHolder;
+
 public class Cache {
 	private HashMap<Integer, Integer> iCache = new HashMap<Integer, Integer>();
 	private HashMap<Integer, Integer> dCache = new HashMap<Integer, Integer>();
@@ -22,6 +24,11 @@ public class Cache {
 		this.size = size;
 		this.lineSize = lineSize;
 		this.associativity = associativity;
+	}
+
+
+	public Cache(CacheDetailsHolder caches) {
+		// TODO Auto-generated constructor stub
 	}
 
 
