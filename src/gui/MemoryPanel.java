@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -33,7 +32,9 @@ public class MemoryPanel extends JScrollPane {
 				.getCacheLvl()];
 		for (int i = 1; i <= startWindow.getCacheLvl(); i++) {
 			CachePanel cachePanel = cachePanels[i - 1] = new CachePanel(i);
-			MainPanel.add(cachePanel);
+			JPanel temp = new JPanel();
+			temp.add(cachePanel);
+			MainPanel.add(temp);
 		}
 
 		JPanel panel_1 = new JPanel();
