@@ -11,9 +11,14 @@ public class Program {
 	Instruction[] instructions;
 	Memory memory;
 
-	public Program(String Code, int startAddress, int MemAccessTime,
-			CacheDetailsHolder[] CacheDetails,
+	public Program(String code, int startAddress, int MemAccessTime,
+			CacheDetailsHolder[] cacheDetails,
 			HashMap<Integer, Integer> editedAddress) {
+		System.out.println(code);
+		System.out.println(startAddress);
+		System.out.println(MemAccessTime);
+		System.out.println(cacheDetails.length);
+		System.out.println(editedAddress);
 	}
 
 	int startAddress;
