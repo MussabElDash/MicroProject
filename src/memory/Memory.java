@@ -54,16 +54,16 @@ public class Memory {
 		return registers[registerId].getValue();
 	}
 	
-	public void setMemoryValue(int memoryAddress, int value){
-		cache.setValue(memoryAddress, value, false);
+	public void setMemoryValue(int memoryAddress, String value){
+		this.setMemoryValue(memoryAddress, value, false);
 	}
 	
-	public void setMemoryValue(int memoryAddress, int value, boolean isInstruction){
+	public void setMemoryValue(int memoryAddress, String value, boolean isInstruction){
 		cache.setValue(memoryAddress, value, isInstruction);
 	}
 	
 	public int getMemoryValue(int memoryAddress){
-		return cache.getValue(memoryAddress, false);
+		return this.getMemoryValue(memoryAddress, false);
 	}
 	
 	public int getMemoryValue(int memoryAddress, boolean isInstruction){

@@ -46,7 +46,7 @@ public class Cache {
 		return 0;
 	}
 	
-	public void setValue(int address, int value, boolean isInstruction){
+	public void setValue(int address, String value, boolean isInstruction){
 		
 	}
 
