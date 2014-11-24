@@ -37,7 +37,12 @@ public class Cache {
 	
 	public Instruction readInstruction(int address){
 		numberOfIssues++;
-		Instruction result = iCache.get(address + "");
+		
+		int offset = address % lineSize;
+		int index = (address / lineSize) % (size / associativity);
+		int tag = address / (lineSize * size / associativity);
+		
+		Instruction result = iCache.get(index + "");
 		
 		if(result == null){
 			// Handle read miss
@@ -82,7 +87,7 @@ public class Cache {
 		
 	}
 	
-	public void initializeMainMemory(Instruction[] instruction, int instructionStartAddress, HashMap<String, String> data){
+	public void initializeMainMemory(Instruction[] instruction, int instructionStartAddress, HashMap<Integer, Integer> data){
 		
 	}
 }
