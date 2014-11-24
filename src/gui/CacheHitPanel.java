@@ -25,6 +25,7 @@ public class CacheHitPanel extends JPanel {
 				ColumnSpec.decode("151px"), }, new RowSpec[] {
 				FormFactory.UNRELATED_GAP_ROWSPEC, RowSpec.decode("15px"),
 				RowSpec.decode("22px"), RowSpec.decode("15px"),
+				FormFactory.UNRELATED_GAP_ROWSPEC, RowSpec.decode("15px"),
 				FormFactory.UNRELATED_GAP_ROWSPEC, RowSpec.decode("15px"), }));
 
 		JLabel lblCacheLevel = new JLabel("Cache Level " + cacheNo);
@@ -41,6 +42,12 @@ public class CacheHitPanel extends JPanel {
 
 		JLabel lblReqNo = new JLabel(req + "");
 		add(lblReqNo, "4, 6, left, center");
+
+		JLabel lblRatio = new JLabel("Ratio:");
+		add(lblRatio, "2, 8, right, center");
+
+		JLabel lblRatioNo = new JLabel((hit * 1.0) / req + "");
+		add(lblRatioNo, "4, 8, left, center");
 
 	}
 }
