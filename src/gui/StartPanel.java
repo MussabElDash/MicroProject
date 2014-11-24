@@ -9,7 +9,6 @@ import java.util.Locale;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -28,7 +27,7 @@ public class StartPanel extends JPanel {
 	 * @param startWindow
 	 * @param frmMicro
 	 */
-	public StartPanel(final StartWindow startWindow, final JFrame frmMicro) {
+	public StartPanel(final StartWindow startWindow) {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale

@@ -63,8 +63,10 @@ public class StartWindow {
 		frmMicro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMicro.setResizable(false);
 		frmMicro.setVisible(true);
-		currentPanel = new StartPanel(this, frmMicro);
+		currentPanel = new StartPanel(this);
 		frmMicro.getContentPane().add(currentPanel);
+		frmMicro.repaint();
+		frmMicro.revalidate();
 	}
 
 	public int getMemAccessTime() {
