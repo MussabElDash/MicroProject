@@ -24,15 +24,10 @@ public class Program {
 		memory = Memory.getInstance();
 		memory.initialize(caches, MemAccessTime, instructions, startAddress, editedAddress);
 		this.startAddress = startAddress;
+		this.execute();
 	}
-
-	public Program(String code, int startAddress,
-			CacheDetailsHolder[] caches, int mainMemoryAccessTime) {
+	
+	public void execute() {
 		
-		int address = startAddress;
-		for (int i = 0; i < instructions.length; i++) {
-			memory.setMemoryValue(address, instructions[i].getMachineCode());
-			address += 4;
-		}
 	}
 }
