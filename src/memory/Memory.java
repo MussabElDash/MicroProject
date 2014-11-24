@@ -1,24 +1,25 @@
 package memory;
 
+import java.util.ArrayList;
+
 import utilities.CacheDetailsHolder;
 import utilities.Utilities;
 
 public class Memory {
 	public static int NOT_FOUND_VALUE = -1111111111;
-	private static Memory rootMemory = null;
+	private static Memory rootMemory = new Memory();
 	
 	private Cache cache = null;
-	private Register[] registers = new Register[8];
+	private Register[] registers = null;
 	
-	public static Memory getInstance(CacheDetailsHolder caches, int mainMemoryAccessTime){
-		if (rootMemory == null) {
-			rootMemory = new Memory(caches, mainMemoryAccessTime);
-		}
+	public static Memory getInstance(){
 		return rootMemory;
 	}
 	
-	private Memory(CacheDetailsHolder caches, int mainMemoryAccessTime) {
+	public void initialize(ArrayList<CacheDetailsHolder> caches, int mainMemoryAccessTime) {
+		caches.add(new CacheDetailsHolder(65536, 1, 1, false, false, mainMemoryAccessTime));
 		cache = new Cache(caches);
+		registers = new Register[8];
 	}
 	
 	public int getRegisterId(String registerTitle){

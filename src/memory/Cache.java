@@ -1,5 +1,6 @@
 package memory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import utilities.CacheDetailsHolder;
@@ -27,7 +28,7 @@ public class Cache {
 	}
 
 
-	public Cache(CacheDetailsHolder caches) {
+	public Cache(ArrayList<CacheDetailsHolder> caches) {
 		// TODO Auto-generated constructor stub
 	}
 
