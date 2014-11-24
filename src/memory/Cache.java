@@ -21,7 +21,16 @@ public class Cache {
 	private int lineSize = 0;
 	private int associativity = 0;
 	
-	public Cache(int size, int lineSize, int associativity, boolean isWriteBack, boolean isWriteAllocate, int accessTime){
+	public Cache(	int size, 
+					int lineSize, 
+					int associativity, 
+					boolean isWriteBack, 
+					boolean isWriteAllocate, 
+					int accessTime, 
+					Instruction[] instruction, 
+					int instructionStartAddress, 
+					HashMap<Integer, Integer> data){
+		
 		this.isWriteBack = isWriteBack;
 		this.isWriteAllocate = isWriteAllocate;
 		this.accessTime = accessTime;
@@ -84,10 +93,6 @@ public class Cache {
 
 
 	public void writeData(int address, String value){
-		
-	}
-	
-	public void initializeMainMemory(Instruction[] instruction, int instructionStartAddress, HashMap<Integer, Integer> data){
 		
 	}
 }
