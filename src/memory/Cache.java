@@ -4,6 +4,7 @@ import instructions.Instruction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import utilities.CacheDetailsHolder;
 import utilities.Pair;
@@ -20,28 +21,43 @@ public class Cache {
 	private int size = 0;
 	private int lineSize = 0;
 	private int associativity = 0;
-	
-	public Cache(	int size, 
-					int lineSize, 
-					int associativity, 
-					boolean isWriteBack, 
-					boolean isWriteAllocate, 
-					int accessTime){
-		
-		this.isWriteBack = isWriteBack;
-		this.isWriteAllocate = isWriteAllocate;
-		this.accessTime = accessTime;
-		this.size = size;
-		this.lineSize = lineSize;
-		this.associativity = associativity;
-	}
 
 
 	public Cache(	ArrayList<CacheDetailsHolder> caches,
 					Instruction[] instruction, 
 					int instructionStartAddress, 
 					HashMap<Integer, Integer> data) {
-		// TODO Auto-generated constructor stub
+		
+		CacheDetailsHolder details = caches.get(0);
+		this.isWriteBack = details.isWriteBack();
+		this.isWriteAllocate = details.isWriteAllocate();
+		this.accessTime = details.getAccessTime();
+		this.size = details.getSize();
+		this.lineSize = details.getLineSize();
+		this.associativity = details.getAssociativity();
+		
+		if(caches.size() > 1){
+			caches.remove(0);
+			lowerLevelCache = new Cache(caches, instruction, instructionStartAddress, data);
+			return;
+		}
+		
+		for(int q = 0; q < instruction.length; q++){
+			iCache.put((instructionStartAddress + 2 * q) + "", instruction[q]);
+		}
+		
+		Set<Integer> keys = data.keySet();
+		for(Integer key : keys){
+			String value = data.get(key).toString();
+			
+			CacheLine line = new CacheLine(lineSize);
+			line.setBlock(0, value);
+			
+			CacheLineSet lineSet = new CacheLineSet(associativity, lineSize);
+			lineSet.insert(0, line);
+			
+			dCache.put(key.toString(), lineSet);
+		}
 	}
 	
 	public Instruction readInstruction(int address){
