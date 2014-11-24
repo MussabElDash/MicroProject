@@ -1,12 +1,14 @@
 package gui;
 
-import java.awt.EventQueue;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
+import utilities.Pair;
 
 public class CacheHitWindow extends JFrame {
 
@@ -17,32 +19,18 @@ public class CacheHitWindow extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					new CacheHitWindow();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public CacheHitWindow() {
+	public CacheHitWindow(ArrayList<Pair<Integer, Integer>> cachesHits) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-		int x = 4; // to be edited
+		int x = cachesHits.size();
 		for (int i = 1; i <= x; i++) {
-			contentPane.add(new CacheHitPanel(i, 5, 10));
+			Pair<Integer, Integer> pair = cachesHits.get(i - 1);
+			contentPane.add(new CacheHitPanel(i, pair.first, pair.second));
 		}
 
 		JScrollPane scrollPane = new JScrollPane(contentPane);

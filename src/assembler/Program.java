@@ -27,23 +27,18 @@ public class Program {
 		memory.initialize(caches, MemAccessTime, instructions, startAddress,
 				editedAddress);
 		this.startAddress = startAddress;
+		this.execute();
 	}
 
-	public Program(String code, int startAddress, CacheDetailsHolder[] caches,
-			int mainMemoryAccessTime) {
+	public void execute() {
 
-		int address = startAddress;
-		for (int i = 0; i < instructions.length; i++) {
-			memory.setMemoryValue(address, instructions[i].getMachineCode());
-			address += 4;
-		}
 	}
 
 	public static void afterExec() {
 		RegistersTable.updateRegisters();
-		// arr = arr[cacheLevels][2]
-		// arr[i][0] hits
-		// arr[i][1] requests
-		// new CacheHitWindow(arr);
+		// arraylist<Pair<Integer>>
+		// arraylist(i).first Hit
+		// arraylist(i).second requests
+		// new CacheHitWindow(arraylist);
 	}
 }
