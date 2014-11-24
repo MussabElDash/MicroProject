@@ -6,8 +6,8 @@ import java.util.HashMap;
 import utilities.CacheDetailsHolder;
 
 public class Cache {
-	private HashMap<Integer, Integer> iCache = new HashMap<Integer, Integer>();
-	private HashMap<Integer, Integer> dCache = new HashMap<Integer, Integer>();
+	private HashMap<String, String> iCache = new HashMap<String, String>();
+	private HashMap<String, String> dCache = new HashMap<String, String>();
 	private Cache lowerLevelCache = null;
 	private boolean isWriteBack = false;
 	private boolean isWriteAllocate = false;
@@ -42,7 +42,22 @@ public class Cache {
 		this.lowerLevelCache = lowerLevelCache;
 	}
 	
-	public int getValue(int address){
+	public int getValue(int address, boolean isInstruction){
+		numberOfIssues++;
+		//HashMap<String String> cache = iCache;
+		if(isInstruction){
+			/// Handle fetching instruction
+		}
+		else{
+			if(dCache.containsKey(address + "")){
+				numberOfHits++;
+				return Integer.parseInt(dCache.get(address + ""));
+			}
+			else{
+				/// Handle read miss
+			}
+		}
+		
 		return 0;
 	}
 	
