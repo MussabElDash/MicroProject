@@ -20,7 +20,9 @@ public class CacheHitWindow extends JFrame {
 	private JPanel contentPane;
 
 	public static void main(String[] args) {
-		new CacheHitWindow(null, 5.3);
+		ArrayList<Pair<Integer, Integer>> arr = new ArrayList<>();
+		arr.add(new Pair<Integer, Integer>(5, 10));
+		new CacheHitWindow(arr, 5.3, 10);
 	}
 
 	/**
@@ -29,13 +31,17 @@ public class CacheHitWindow extends JFrame {
 	 * @param amat
 	 */
 	public CacheHitWindow(ArrayList<Pair<Integer, Integer>> cachesHits,
-			double amat) {
+			double amat, int NumberOfInstructions) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		JPanel panel = new JPanel();
+		panel.add(new JLabel("Number Of Instructions:\t"));
+		panel.add(new JLabel(NumberOfInstructions + ""));
+		contentPane.add(panel);
+		panel = new JPanel();
 		panel.add(new JLabel("AMAT:\t"));
 		panel.add(new JLabel(amat + " seconds"));
 		contentPane.add(panel);

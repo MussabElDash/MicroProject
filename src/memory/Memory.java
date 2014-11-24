@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import utilities.CacheDetailsHolder;
+import utilities.Pair;
 import utilities.Utilities;
 
 public class Memory {
@@ -67,5 +68,13 @@ public class Memory {
 	
 	public Instruction getInstruction(int memoryAddress) {
 		return cache.readInstruction(memoryAddress);
+	}
+	
+	public ArrayList<Pair<Integer, Integer>> getCacheStats() {
+		return cache.getCacheStats();
+	}
+	
+	public double getAMAT() {
+		return cache.getAMAT();
 	}
 }
