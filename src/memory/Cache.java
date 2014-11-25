@@ -58,6 +58,19 @@ public class Cache {
 			iCache.put((instructionStartAddress + q) + "", lineSet);
 		}
 		
+		for(int q = 0; q < size; q++){
+			String value = "0";
+			
+			CacheLine<String> line = new CacheLine<String>(lineSize);
+			line.setBlock(0, value);
+			line.setTag("0");
+			
+			CacheLineSet<String> lineSet = new CacheLineSet<String>(associativity, lineSize);
+			lineSet.insert(0, line);
+			
+			dCache.put(q + "", lineSet);
+		}
+		
 		Set<Integer> keys = data.keySet();
 		for(Integer key : keys){
 			String value = data.get(key).toString();
@@ -220,6 +233,10 @@ public class Cache {
 		
 		lineSet.insert(lineIndex, replacedLine);
 		
+		if(lowerLevelCache == null){
+			return;
+		}
+		
 		if(isWriteBack){
 			replacedLine.setDirty(true);
 		}
@@ -270,6 +287,10 @@ public class Cache {
 		
 		CacheLine<String> line = lineSet.getCacheLine(cacheLineIndex);
 		line.setBlock(offset, value);
+		
+		if(lowerLevelCache == null){
+			return;
+		}
 		
 		if(isWriteBack){
 			line.setDirty(true);
