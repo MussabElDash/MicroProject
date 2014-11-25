@@ -39,8 +39,15 @@ public class Cache {
 		this.associativity = details.getAssociativity();
 		
 		for(int q = 0; q < size; q++){
-			dCache.put(q + "", new CacheLineSet<String>(associativity, lineSize));
-			iCache.put(q + "", new CacheLineSet<Instruction>(associativity, lineSize));
+			String tag = null;
+			if(caches.size() == 1){
+				tag = "0";
+			}
+			CacheLineSet<String> dCacheLineSet = new CacheLineSet<String>(associativity, lineSize, tag);
+			CacheLineSet<Instruction> iCacheLineSet = new CacheLineSet<Instruction>(associativity, lineSize, tag);
+			
+			dCache.put(q + "", dCacheLineSet);
+			iCache.put(q + "", iCacheLineSet);
 		}
 		
 		if(caches.size() > 1){
@@ -104,7 +111,7 @@ public class Cache {
 			numberOfIssues++;
 		}
 		
-		int index = ((address / lineSize) % (size / associativity)) % size;
+		int index = (address / lineSize) % (size / associativity);
 		int tag = address / (lineSize * size / associativity);
 
 		CacheLineSet<Instruction> lineSet = iCache.get(index + "");
@@ -112,19 +119,25 @@ public class Cache {
 		
 		if(cacheLineIndex == -1){
 			// Handle read miss
-			CacheLine<Instruction> lowerCacheLine = lowerLevelCache.readInstructionLine(address, true);
+			
 			CacheLine<Instruction> newCacheLine = new CacheLine<Instruction>(lineSize);
 			newCacheLine.setTag(tag + "");
 			
 			int lowerLevelLineSize = lowerLevelCache.lineSize;
 			int currentBaseAddress = address - address % lineSize;
-			int lowerBaseAddress = currentBaseAddress % lowerLevelLineSize;
-		//	for(int q = 0; q < )
+			int currentAdd = currentBaseAddress % lowerLevelLineSize;
+			CacheLine<Instruction> lowerCacheLine = lowerLevelCache.readInstructionLine(currentBaseAddress + currentAdd, true);
 			
-			int baseAddress = address - address % lineSize;
+			int i = 0;
 			for(int q = 0; q < lineSize; q++){
-				Instruction value = lowerLevelCache.readInstruction(baseAddress + q, q == 0);
+				if(i == lowerLevelLineSize){
+					i = 0;
+					currentAdd += lowerLevelLineSize;
+					lowerCacheLine = lowerLevelCache.readInstructionLine(currentBaseAddress + currentAdd, true);
+				}
+				Instruction value = lowerCacheLine.getBlock(i);
 				newCacheLine.setBlock(q, value);
+				i++;
 			}
 			
 			// Get replaced Line
@@ -133,7 +146,7 @@ public class Cache {
 			
 			// Check for dirty bit
 			if(toReplaceLine.getTag() != null && toReplaceLine.isDirty()){
-				lowerLevelCache.writeInstructionLine(index, toReplaceLine);
+				lowerLevelCache.writeInstructionLine(index, toReplaceLine, address);
 			}
 			
 			// Replace it
@@ -150,21 +163,38 @@ public class Cache {
 		return lineSet.getCacheLine(cacheLineIndex);
 	}
 
-	private void writeInstructionLine(int index, CacheLine<Instruction> replacedLine) {
+	private void writeInstructionLine(int index, CacheLine<Instruction> replacedLine, int absoluteAddress) {
 		numberOfIssues++;
 		
 		CacheLineSet<Instruction> lineSet = iCache.get(index + "");
 		int lineIndex = lineSet.searchTags(replacedLine.getTag());
 		
 		if(lineIndex == -1){
-			lowerLevelCache.writeInstructionLine(index, replacedLine);
+			int i = 0, j = 0;
+			int lowerLineSize = lowerLevelCache.lineSize;
+			int currentAddress = absoluteAddress - absoluteAddress % lineSize;
+			CacheLine<Instruction> lowerCacheLine = lowerLevelCache.readInstructionLine(currentAddress, false);
+			while(i < lineSize){
+				if(j == lowerLineSize){
+					lowerLevelCache.writeInstructionLine(currentAddress / lowerLineSize, lowerCacheLine, currentAddress);
+					currentAddress += lowerLineSize;
+					lowerCacheLine = lowerLevelCache.readInstructionLine(currentAddress, false);
+					j = 0;
+				}
+				lowerCacheLine.setBlock(j, replacedLine.getBlock(i));
+				
+				i++;
+				j++;
+			}
+			
+			lowerLevelCache.writeInstructionLine(currentAddress / lowerLineSize, lowerCacheLine, currentAddress);
 			
 			if(isWriteAllocate){
 				int toReplaceLineIndex = lineSet.getLineIndexToReplace();
 				CacheLine<Instruction> toReplaceLine = lineSet.getCacheLine(toReplaceLineIndex);
 				
 				if(toReplaceLine.getTag() != null && toReplaceLine.isDirty()){
-					lowerLevelCache.writeInstructionLine(index, toReplaceLine);
+					lowerLevelCache.writeInstructionLine(index, toReplaceLine, absoluteAddress);
 				}
 				
 				replacedLine.setDirty(false);
@@ -183,7 +213,7 @@ public class Cache {
 		}
 		else{
 			replacedLine.setDirty(false);
-			lowerLevelCache.writeInstructionLine(index, replacedLine);
+			lowerLevelCache.writeInstructionLine(index, replacedLine, absoluteAddress);
 		}
 	}
 	
@@ -210,7 +240,7 @@ public class Cache {
 		
 		if(cacheLineIndex == -1){
 			// Handle read miss
-			System.out.println("Read miss " + lowerLevelCache);
+			/*System.out.println("Read miss " + lowerLevelCache);
 			int baseAddress = address - address % lineSize;
 			CacheLine<String> newCacheLine = new CacheLine<String>(lineSize);
 			newCacheLine.setTag(tag + "");
@@ -219,14 +249,34 @@ public class Cache {
 				String value = lowerLevelCache.readData(baseAddress + q, q == 0);
 				newCacheLine.setBlock(q, value);
 			}
+			*/
 			
+			CacheLine<String> newCacheLine = new CacheLine<String>(lineSize);
+			newCacheLine.setTag(tag + "");
+			
+			int lowerLevelLineSize = lowerLevelCache.lineSize;
+			int currentBaseAddress = address - address % lineSize;
+			int currentAdd = currentBaseAddress % lowerLevelLineSize;
+			CacheLine<String> lowerCacheLine = lowerLevelCache.readLine(currentBaseAddress + currentAdd, true);
+			
+			int i = 0;
+			for(int q = 0; q < lineSize; q++){
+				if(i == lowerLevelLineSize){
+					i = 0;
+					currentAdd += lowerLevelLineSize;
+					lowerCacheLine = lowerLevelCache.readLine(currentBaseAddress + currentAdd, true);
+				}
+				String value = lowerCacheLine.getBlock(i);
+				newCacheLine.setBlock(q, value);
+				i++;
+			}
 			// Get replaces Line
 			int replacedLineIndex = lineSet.getLineIndexToReplace();
 			CacheLine<String> toReplaceLine = lineSet.getCacheLine(replacedLineIndex);
 			
 			// Check for dirty bit
 			if(toReplaceLine.getTag() != null && toReplaceLine.isDirty()){
-				lowerLevelCache.writeLine(index, toReplaceLine);
+				lowerLevelCache.writeLine(index, toReplaceLine, address);
 			}
 			// Replace it
 			
@@ -244,21 +294,41 @@ public class Cache {
 		return lineSet.getCacheLine(cacheLineIndex);
 	}
 	
-	private void writeLine(int index, CacheLine<String> replacedLine) {
+	private void writeLine(int index, CacheLine<String> replacedLine, int absoluteAddress) {
 		numberOfIssues++;
 		
 		CacheLineSet<String> lineSet = dCache.get(index + "");
 		int lineIndex = lineSet.searchTags(replacedLine.getTag());
 		
 		if(lineIndex == -1){
-			lowerLevelCache.writeLine(index, replacedLine);
+			//TODO do it !
+
+			int i = 0, j = 0;
+			int lowerLineSize = lowerLevelCache.lineSize;
+			int currentAddress = absoluteAddress - absoluteAddress % lineSize;
+			CacheLine<String> lowerCacheLine = lowerLevelCache.readLine(currentAddress, false);
+			while(i < lineSize){
+				if(j == lowerLineSize){
+					lowerLevelCache.writeLine(currentAddress / lowerLineSize, lowerCacheLine, currentAddress);
+					currentAddress += lowerLineSize;
+					lowerCacheLine = lowerLevelCache.readLine(currentAddress, false);
+					j = 0;
+				}
+				lowerCacheLine.setBlock(j, replacedLine.getBlock(i));
+				
+				i++;
+				j++;
+			}
+			
+			lowerLevelCache.writeLine(currentAddress / lowerLineSize, lowerCacheLine, currentAddress);
+			
 			System.out.println("Write miss " + lowerLevelCache);
 			if(isWriteAllocate){
 				int toReplaceLineIndex = lineSet.getLineIndexToReplace();
 				CacheLine<String> toReplaceLine = lineSet.getCacheLine(toReplaceLineIndex);
 				
 				if(toReplaceLine.getTag() != null && toReplaceLine.isDirty()){
-					lowerLevelCache.writeLine(index, toReplaceLine);
+					lowerLevelCache.writeLine(index, toReplaceLine, absoluteAddress);
 				}
 				
 				replacedLine.setDirty(false);
@@ -281,7 +351,7 @@ public class Cache {
 		}
 		else{
 			replacedLine.setDirty(false);
-			lowerLevelCache.writeLine(index, replacedLine);
+			lowerLevelCache.writeLine(index, replacedLine, absoluteAddress);
 		}
 	}
 
@@ -301,16 +371,38 @@ public class Cache {
 			lowerLevelCache.writeData(address, value);
 			
 			if(isWriteAllocate){
-				// TODO: do this!!
-				CacheLine<String> line = lowerLevelCache.readLine(address, true);
+				//CacheLine<String> line = lowerLevelCache.readLine(address, true);
+				//line.setBlock(offset, value);
+				//line.setTag(tag + "");
+				
+				CacheLine<String> lowerCacheLine = lowerLevelCache.readLine(address, true);
+				CacheLine<String> line = new CacheLine<String>(lineSize);
+				line.setTag(tag + "");
+				
+				int lowerLevelLineSize = lowerLevelCache.lineSize;
+				int currentBaseAddress = address - address % lineSize;
+				int currentAdd = currentBaseAddress % lowerLevelLineSize;
+				int i = 0;
+				for(int q = 0; q < lineSize; q++){
+					if(i >= lowerLevelLineSize){
+						i = 0;
+						currentAdd += lowerLevelLineSize;
+						lowerCacheLine = lowerLevelCache.readLine(currentAdd, true);
+					}
+					String value2 = lowerCacheLine.getBlock(i);
+					line.setBlock(q, value2);
+					i++;
+				}
 				line.setBlock(offset, value);
 				line.setTag(tag + "");
+				
+				////
 				
 				int toReplaceLineIndex = lineSet.getLineIndexToReplace();
 				CacheLine<String> toReplaceLine = lineSet.getCacheLine(toReplaceLineIndex);
 				System.out.println(toReplaceLineIndex + " to replace index");
 				if(toReplaceLine.getTag() != null && toReplaceLine.isDirty()){
-					lowerLevelCache.writeLine(index, toReplaceLine);
+					lowerLevelCache.writeLine(index, toReplaceLine, address);
 				}
 				
 				line.setDirty(false);
@@ -359,3 +451,11 @@ public class Cache {
 		return numberOfHits * 1.0 / numberOfIssues * accessTime + (numberOfIssues - numberOfHits) * 1.0 / numberOfIssues * lowerLevelCache.getAMAT();
 	}
 }
+/*
+ * BenchMark
+addi R1 R1 5
+addi R2 R2 6
+add R3 R1 R2
+sw R1 R3 0
+lw R4 R3 0
+ */

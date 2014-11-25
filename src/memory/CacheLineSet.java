@@ -13,6 +13,13 @@ public class CacheLineSet<T> {
 		}
 	}
 	
+	public CacheLineSet(int associativity, int lineSize, String tag){
+		this.associativity = associativity;
+		for(int q = 0; q < associativity; q++){
+			lineSet.add(new CacheLine<T>(lineSize, tag));
+		}
+	}
+	
 	public int searchTags(int tag){
 		return searchTags(tag + "");
 	}

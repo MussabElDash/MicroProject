@@ -15,6 +15,14 @@ public class CacheLine<T> {
 		}
 	}
 	
+	public CacheLine(int size, String tag){
+		this.size = size;
+		for(int q = 0; q < size; q++){
+			line.add(null);
+		}
+		this.tag = tag;
+	}
+	
 	public void setLine(ArrayList<T> line){
 		this.line = line;
 	}
