@@ -62,7 +62,7 @@ public class RegistersTable extends JPanel {
 		JLabel lblR_5 = new JLabel("R6");
 		add(lblR_5, "1, 13");
 
-		JLabel lblR_6 = new JLabel("R7");
+		JLabel lblR_6 = new JLabel("PC");
 		add(lblR_6, "1, 15");
 
 		for (int i = 0; i < 8; i++) {
