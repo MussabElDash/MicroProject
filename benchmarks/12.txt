@@ -1,0 +1,26 @@
+Data:
+
+1, 20
+
+Program:
+
+addi R1 R0 10
+sw R1 R0 0
+addi R1 R1 10
+sw R1 R0 1
+addi R1 R1 10
+sw R1 R0 2
+lw R1 R0 0
+lw R2 R0 1
+lw R3 R0 2
+
+Cache:
+
+1, 1, 1, 1, wt, na
+1, 1, 1, 1, wt, na
+1, 1, 1, 1, wt, na
+
+Comments:
+
+3 Write Misses
+3 Read Misses
