@@ -55,7 +55,7 @@ public class Cache {
 			CacheLineSet<Instruction> lineSet = new CacheLineSet<Instruction>(associativity, lineSize);
 			lineSet.insert(0, line);
 			
-			iCache.put((instructionStartAddress + 2 * q) + "", lineSet);
+			iCache.put((instructionStartAddress + q) + "", lineSet);
 		}
 		
 		Set<Integer> keys = data.keySet();
@@ -80,10 +80,9 @@ public class Cache {
 
 
 	private CacheLine<Instruction> readInstructionLine(int address) {
-		address /= 2;
 		numberOfIssues++;
 		
-		int index = (address / lineSize) % (size / associativity);
+		int index = ((address / lineSize) % (size / associativity)) % size;
 		int tag = address / (lineSize * size / associativity);
 
 		CacheLineSet<Instruction> lineSet = iCache.get(index + "");
@@ -162,7 +161,7 @@ public class Cache {
 		
 		numberOfIssues++;
 		
-		int index = (address / lineSize) % (size / associativity);
+		int index = ((address / lineSize) % (size / associativity)) % size;
 		int tag = address / (lineSize * size / associativity);
 		
 		CacheLineSet<String> lineSet = dCache.get(index + "");
@@ -237,7 +236,7 @@ public class Cache {
 		numberOfIssues++;
 		
 		int offset = address % lineSize;
-		int index = (address / lineSize) % (size / associativity);
+		int index = ((address / lineSize) % (size / associativity)) % size;
 		int tag = address / (lineSize * size / associativity);
 		
 		CacheLineSet<String> lineSet = dCache.get(index + "");
