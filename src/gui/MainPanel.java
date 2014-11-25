@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -81,13 +82,12 @@ public class MainPanel extends JPanel implements ActionListener {
 
 	protected JButton makeNavigationButton(String imageName,
 			String actionCommand, String toolTipText, String altText) {
-		String imgLocation = "img/" + imageName + ".gif";
-
+		URL imgLocation = getClass().getClassLoader().getResource(imageName + ".gif");
 		JButton button = new JButton();
 		button.setActionCommand(actionCommand);
 		button.setToolTipText(toolTipText);
 
-		button.setIcon(new ImageIcon(imgLocation, altText));
+		 button.setIcon(new ImageIcon(imgLocation, altText));
 
 		return button;
 	}
