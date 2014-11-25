@@ -11,7 +11,7 @@ public class Nand extends Instruction {
 
 	@Override
 	public void execute() {
-		mem.setRegisterValue(regA, mem.getRegisterValue(regB) & (~mem.getRegisterValue(regC)));
+		mem.setRegisterValue(regA, ~(mem.getRegisterValue(regB) & mem.getRegisterValue(regC)));
 	}
 
 	@Override

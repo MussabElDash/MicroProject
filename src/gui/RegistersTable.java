@@ -73,7 +73,8 @@ public class RegistersTable extends JPanel {
 
 	public static void updateRegisters() {
 		Memory mem = Memory.getInstance();
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 7; i++)
 			fields[i].setText(mem.getRegisterValue("R" + i) + "");
+		fields[7].setText(mem.getRegisterValue("PC") + "");
 	}
 }
