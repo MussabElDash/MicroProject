@@ -112,8 +112,14 @@ public class Cache {
 		
 		if(cacheLineIndex == -1){
 			// Handle read miss
+			CacheLine<Instruction> lowerCacheLine = lowerLevelCache.readInstructionLine(address, true);
 			CacheLine<Instruction> newCacheLine = new CacheLine<Instruction>(lineSize);
 			newCacheLine.setTag(tag + "");
+			
+			int lowerLevelLineSize = lowerLevelCache.lineSize;
+			int currentBaseAddress = address - address % lineSize;
+			int lowerBaseAddress = currentBaseAddress % lowerLevelLineSize;
+		//	for(int q = 0; q < )
 			
 			int baseAddress = address - address % lineSize;
 			for(int q = 0; q < lineSize; q++){
