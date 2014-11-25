@@ -12,7 +12,7 @@ public class Jmp extends Instruction {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		mem.setRegisterValue("PC", mem.getRegisterValue("PC") + 1 + mem.getRegisterValue(regA) + immValue);
+		mem.setRegisterValue("PC", mem.getRegisterValue("PC") + mem.getRegisterValue(regA) + immValue);
 
 	}
 

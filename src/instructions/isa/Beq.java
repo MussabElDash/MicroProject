@@ -12,7 +12,7 @@ public class Beq extends Instruction {
 	@Override
 	public void execute() {
 		if (mem.getRegisterValue(regA) == mem.getRegisterValue(regB))
-			mem.setRegisterValue("PC", mem.getRegisterValue("PC") + 1 + immValue);
+			mem.setRegisterValue("PC", mem.getRegisterValue("PC") + immValue);
 	}
 
 	@Override
