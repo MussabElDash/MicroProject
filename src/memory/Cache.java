@@ -182,6 +182,7 @@ public class Cache {
 		
 		if(cacheLineIndex == -1){
 			// Handle read miss
+			System.out.println("Read miss " + lowerLevelCache);
 			CacheLine<String> newCacheLine = lowerLevelCache.readLine(address);
 			
 			// Get replaces Line
@@ -201,7 +202,7 @@ public class Cache {
 		}
 		
 		numberOfHits++;
-		
+		System.out.println("Read hit " + lowerLevelCache);
 		return lineSet.getCacheLine(cacheLineIndex);
 	}
 	
@@ -213,7 +214,7 @@ public class Cache {
 		
 		if(lineIndex == -1){
 			lowerLevelCache.writeLine(index, replacedLine);
-			
+			System.out.println("Write miss " + lowerLevelCache);
 			if(isWriteAllocate){
 				int toReplaceLineIndex = lineSet.getLineIndexToReplace();
 				CacheLine<String> toReplaceLine = lineSet.getCacheLine(toReplaceLineIndex);
@@ -230,7 +231,7 @@ public class Cache {
 		}
 		
 		numberOfHits++;
-		
+		System.out.println("Write hit " + lowerLevelCache);
 		lineSet.insert(lineIndex, replacedLine);
 		
 		if(lowerLevelCache == null){
@@ -266,10 +267,11 @@ public class Cache {
 			if(isWriteAllocate){
 				CacheLine<String> line = lowerLevelCache.readLine(address);
 				line.setBlock(offset, value);
+				line.setTag(tag + "");
 				
 				int toReplaceLineIndex = lineSet.getLineIndexToReplace();
 				CacheLine<String> toReplaceLine = lineSet.getCacheLine(toReplaceLineIndex);
-				
+				System.out.println(toReplaceLineIndex + " to replace index");
 				if(toReplaceLine.getTag() != null && toReplaceLine.isDirty()){
 					lowerLevelCache.writeLine(index, toReplaceLine);
 				}
@@ -287,6 +289,7 @@ public class Cache {
 		
 		CacheLine<String> line = lineSet.getCacheLine(cacheLineIndex);
 		line.setBlock(offset, value);
+		line.setTag(tag + "");
 		
 		if(lowerLevelCache == null){
 			return;
