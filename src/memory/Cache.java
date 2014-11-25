@@ -90,13 +90,19 @@ public class Cache {
 	}
 	
 	public Instruction readInstruction(int address){
-		CacheLine<Instruction> line = readInstructionLine(address);
+		return readInstruction(address, true);
+	}
+	
+	public Instruction readInstruction(int address, boolean considerIt){
+		CacheLine<Instruction> line = readInstructionLine(address, considerIt);
 		return line.getBlock(address % lineSize);
 	}
 
 
-	private CacheLine<Instruction> readInstructionLine(int address) {
-		numberOfIssues++;
+	private CacheLine<Instruction> readInstructionLine(int address, boolean considerIt) {
+		if(considerIt){
+			numberOfIssues++;
+		}
 		
 		int index = ((address / lineSize) % (size / associativity)) % size;
 		int tag = address / (lineSize * size / associativity);
@@ -106,7 +112,14 @@ public class Cache {
 		
 		if(cacheLineIndex == -1){
 			// Handle read miss
-			CacheLine<Instruction> newCacheLine = lowerLevelCache.readInstructionLine(address);
+			CacheLine<Instruction> newCacheLine = new CacheLine<Instruction>(lineSize);
+			newCacheLine.setTag(tag + "");
+			
+			int baseAddress = address - address % lineSize;
+			for(int q = 0; q < lineSize; q++){
+				Instruction value = lowerLevelCache.readInstruction(baseAddress + q, q == 0);
+				newCacheLine.setBlock(q, value);
+			}
 			
 			// Get replaced Line
 			int replacedLineIndex = lineSet.getLineIndexToReplace();
@@ -124,13 +137,14 @@ public class Cache {
 			return newCacheLine;
 		}
 		
-		numberOfHits++;
+		if(considerIt){
+			numberOfHits++;
+		}
 		
 		return lineSet.getCacheLine(cacheLineIndex);
 	}
 
-	private void writeInstructionLine(int index,
-			CacheLine<Instruction> replacedLine) {
+	private void writeInstructionLine(int index, CacheLine<Instruction> replacedLine) {
 		numberOfIssues++;
 		
 		CacheLineSet<Instruction> lineSet = iCache.get(index + "");
