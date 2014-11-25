@@ -1,0 +1,24 @@
+Data:
+
+0, 10
+1, 20
+2, 30
+
+Program:
+
+lw R1 R0 0
+lw R2 R0 1
+lw R3 R0 2
+lw R1 R0 0
+lw R2 R0 1
+lw R3 R0 2
+
+Cache:
+
+1, 1, 1, 1, wb, wa
+3, 1, 1, 2, wb, wa
+
+Comments:
+
+3 Read Misses
+3 L2 Read Hits
