@@ -55,6 +55,10 @@ public class Memory {
 			Utilities.raiseError("Register " + registerTitle + " not found!");
 			return;
 		}
+		else if (registerId == 0) {
+			Utilities.raiseError("Register 0 cannot be modified!");
+			return;
+		}
 
 		registers[registerId].setValue((short) value);
 	}
