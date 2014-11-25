@@ -11,7 +11,7 @@ public class Jalr extends Instruction {
 
 	@Override
 	public void execute() {
-		mem.setRegisterValue(regA, mem.getRegisterValue("PC") + 1);
+		mem.setRegisterValue(regA, mem.getRegisterValue("PC"));
 		mem.setRegisterValue("PC", mem.getRegisterValue(regB));
 	}
 
