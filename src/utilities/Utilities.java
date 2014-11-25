@@ -27,6 +27,10 @@ public class Utilities {
 	}
 
 	public static int getDecimalNumber(String memoryValue) {
+		while(memoryValue.length() < 16){
+			memoryValue = "0" + memoryValue;
+		}
+		
 		String newVal = "";
 		boolean flag = false;
 		if (memoryValue.charAt(0) == '1') {

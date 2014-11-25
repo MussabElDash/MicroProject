@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import com.jgoodies.forms.util.Utilities;
+
 import utilities.CacheDetailsHolder;
 import utilities.Pair;
 
@@ -74,9 +76,10 @@ public class Cache {
 		Set<Integer> keys = data.keySet();
 		for(Integer key : keys){
 			String value = data.get(key).toString();
+			String binValue = utilities.Utilities.getBinaryNumber(Integer.parseInt(value), 16);
 			
 			CacheLine<String> line = new CacheLine<String>(lineSize);
-			line.setBlock(0, value);
+			line.setBlock(0, binValue);
 			line.setTag("0");
 			
 			CacheLineSet<String> lineSet = new CacheLineSet<String>(associativity, lineSize);
@@ -163,16 +166,21 @@ public class Cache {
 			lowerLevelCache.writeInstructionLine(index, replacedLine);
 		}
 	}
+	
 
 	public String readData(int address){
-		CacheLine<String> line = readLine(address);
+		return readData(address, true);
+	}
+	
+	public String readData(int address, boolean considerIt){
+		CacheLine<String> line = readLine(address, considerIt);
 		return line.getBlock(address % lineSize);
 	}
 	
-	public CacheLine<String> readLine(int address){
-		address *= 2;
-		
-		numberOfIssues++;
+	public CacheLine<String> readLine(int address, boolean considerIt){
+		if(considerIt){
+			numberOfIssues++;
+		}
 		
 		int index = ((address / lineSize) % (size / associativity)) % size;
 		int tag = address / (lineSize * size / associativity);
@@ -183,7 +191,14 @@ public class Cache {
 		if(cacheLineIndex == -1){
 			// Handle read miss
 			System.out.println("Read miss " + lowerLevelCache);
-			CacheLine<String> newCacheLine = lowerLevelCache.readLine(address);
+			int baseAddress = address - address % lineSize;
+			CacheLine<String> newCacheLine = new CacheLine<String>(lineSize);
+			newCacheLine.setTag(tag + "");
+			
+			for(int q = 0; q < lineSize; q++){
+				String value = lowerLevelCache.readData(baseAddress + q, q == 0);
+				newCacheLine.setBlock(q, value);
+			}
 			
 			// Get replaces Line
 			int replacedLineIndex = lineSet.getLineIndexToReplace();
@@ -201,7 +216,10 @@ public class Cache {
 			return newCacheLine;
 		}
 		
-		numberOfHits++;
+		if(considerIt){
+			numberOfHits++;
+		}
+		
 		System.out.println("Read hit " + lowerLevelCache);
 		return lineSet.getCacheLine(cacheLineIndex);
 	}
@@ -249,8 +267,6 @@ public class Cache {
 
 
 	public void writeData(int address, String value){
-		address *= 2;
-		
 		numberOfIssues++;
 		
 		int offset = address % lineSize;
@@ -265,7 +281,8 @@ public class Cache {
 			lowerLevelCache.writeData(address, value);
 			
 			if(isWriteAllocate){
-				CacheLine<String> line = lowerLevelCache.readLine(address);
+				// TODO: do this!!
+				CacheLine<String> line = lowerLevelCache.readLine(address, true);
 				line.setBlock(offset, value);
 				line.setTag(tag + "");
 				
