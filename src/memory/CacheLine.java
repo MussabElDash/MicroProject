@@ -9,14 +9,14 @@ public class CacheLine<T> {
 	private String tag = null;
 	
 	public CacheLine(int size){
-		this.size = size;
+		this.setSize(size);
 		for(int q = 0; q < size; q++){
 			line.add(null);
 		}
 	}
 	
 	public CacheLine(int size, String tag){
-		this.size = size;
+		this.setSize(size);
 		for(int q = 0; q < size; q++){
 			line.add(null);
 		}
@@ -49,5 +49,13 @@ public class CacheLine<T> {
 	
 	public void setTag(String tag){
 		this.tag = tag;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 }
