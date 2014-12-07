@@ -1,5 +1,46 @@
 package instructions;
 
-public class InstructionQueue {
+import java.util.LinkedList;
 
+public class InstructionQueue {
+	public static int size = 0;
+	public static int pipelineWidth = 1;
+	
+	private static LinkedList<Instruction> queue = new LinkedList<Instruction>();
+	
+	public static boolean enqueue(Instruction instruction) {
+		if(queue.size() == size)
+			return false;
+		queue.push(instruction);
+		return true;
+	}
+	
+	public static boolean isEmpty() {
+		return queue.isEmpty();
+	}
+	
+	public static Instruction dequeu() {
+		return queue.pop();
+	}
+	
+	public static void flush() {
+		queue.clear();
+	}
+	
+	public static void resize(int newSize) {
+		size = newSize;
+		flush();
+	}
+	
+	public static int availableInstructions() {
+		return queue.size();
+	}
+	
+	public static void setPipelineWidth(int newWidth) {
+		pipelineWidth = newWidth;
+	}
+	
+	public static void issue() {
+		// TODO: Add issue logic
+	}
 }
