@@ -8,6 +8,7 @@ import utilities.Pair;
 import gui.CacheHitWindow;
 import gui.RegistersTable;
 import instructions.Instruction;
+import instructions.InstructionQueue;
 import memory.Memory;
 
 public class Program {
@@ -15,6 +16,7 @@ public class Program {
 	int startAddress;
 	int endAddress;
 	int numOfInstructions;
+	int numOfCycles;
 
 	public Program(String code, int startAddress, int MemAccessTime,
 			CacheDetailsHolder[] cacheDetails,
@@ -38,14 +40,28 @@ public class Program {
 	public void execute() {
 		int val = 0;
 		memory.setRegisterValue("PC", startAddress);
+		
 		do {
-			// TODO: Use instruction queue class
+			numOfCycles++;
+			// Main Tomasulo Loop
+			int m = InstructionQueue.getPipelineWidth();
 			val = memory.getRegisterValue("PC");
-			Instruction current = memory.getInstruction(val);
-			memory.setRegisterValue("PC", val + 1);
-			current.execute();
-			numOfInstructions++;
-		} while (val != endAddress);
+			// Prefetch m instructions
+			for(int i = 0; i < m && !InstructionQueue.isFull() && val != endAddress; i++) {
+				Instruction current = memory.getInstruction(val);
+				memory.setRegisterValue("PC", val + 1);
+				InstructionQueue.enqueue(current);
+				// TODO: check this logic. I'm not sure what this counter should do in case pre-fetched instructions were cleared from the buffer due to branch misprediction.
+				numOfInstructions++;
+				val = memory.getRegisterValue("PC");
+			}
+			// Issue
+			if(!InstructionQueue.isEmpty())
+				InstructionQueue.issue();
+			// Execute
+			// Write
+			// Commit
+		} while (val != endAddress || !InstructionQueue.isEmpty());
 	}
 
 	public void afterExec() {

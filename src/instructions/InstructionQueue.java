@@ -3,8 +3,8 @@ package instructions;
 import java.util.LinkedList;
 
 public class InstructionQueue {
-	public static int size = 0;
-	public static int pipelineWidth = 1;
+	private static int size = 0;
+	private static int pipelineWidth = 1;
 	
 	private static LinkedList<Instruction> queue = new LinkedList<Instruction>();
 	
@@ -17,6 +17,10 @@ public class InstructionQueue {
 	
 	public static boolean isEmpty() {
 		return queue.isEmpty();
+	}
+	
+	public static boolean isFull() {
+		return queue.size() >= size;
 	}
 	
 	public static Instruction dequeu() {
@@ -38,6 +42,10 @@ public class InstructionQueue {
 	
 	public static void setPipelineWidth(int newWidth) {
 		pipelineWidth = newWidth;
+	}
+	
+	public static int getPipelineWidth() {
+		return pipelineWidth;
 	}
 	
 	public static void issue() {

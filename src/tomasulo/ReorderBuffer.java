@@ -1,4 +1,4 @@
-package instructions;
+package tomasulo;
 
 public class ReorderBuffer {
 
