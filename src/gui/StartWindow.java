@@ -58,7 +58,7 @@ public class StartWindow {
 	 */
 	private void initialize() {
 		frmMicro = new JFrame();
-		frmMicro.setTitle("Micro");
+		frmMicro.setTitle("Superscalar Speculative RiSC Emulator");
 		frmMicro.setBounds(100, 100, 900, 600);
 		frmMicro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMicro.setResizable(false);
