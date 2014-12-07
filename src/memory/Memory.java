@@ -67,11 +67,22 @@ public class Memory {
 		int registerId = getRegisterId(registerTitle);
 
 		if (registerId == NOT_FOUND_VALUE) {
-			Utilities.raiseError("Register " + registerTitle + " not found!");
+			Utilities.raiseError("Register " + registerTitle + " not found! (Value)");
 			return NOT_FOUND_VALUE;
 		}
 
 		return registers[registerId].getValue();
+	}
+	
+	public Register getRegister(String registerTitle) {
+		int registerId = getRegisterId(registerTitle);
+		
+		if (registerId == NOT_FOUND_VALUE) {
+			Utilities.raiseError("Register " + registerTitle + " not found! (Register)");
+			return null;
+		}
+		
+		return registers[registerId];
 	}
 
 	public void setMemoryValue(int memoryAddress, String value) {
