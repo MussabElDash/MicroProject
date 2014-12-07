@@ -39,6 +39,7 @@ public class Program {
 		int val = 0;
 		memory.setRegisterValue("PC", startAddress);
 		do {
+			// TODO: Use instruction queue class
 			val = memory.getRegisterValue("PC");
 			Instruction current = memory.getInstruction(val);
 			memory.setRegisterValue("PC", val + 1);
