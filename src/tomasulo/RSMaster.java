@@ -30,6 +30,11 @@ public class RSMaster {
 	}
 	
 	public static boolean addInstruction(Instruction instruction) {
+		for(int i = 0; i < rsCount; i++)
+			if(rStations[i].free() && rStations[i].getType() == instruction.getType()) {
+				// TODO: binding logic
+				return true;
+			}
 		return false;
 	}
 	

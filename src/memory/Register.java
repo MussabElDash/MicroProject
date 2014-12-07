@@ -6,6 +6,7 @@ public class Register {
 	private short value = 0;
 	private String title = "NOT SET";
 	private boolean isZeroRegister = false;
+	private int robNum;
 	
 	public Register(boolean isZeroRegister, String title){
 		this.isZeroRegister = isZeroRegister;
@@ -32,5 +33,13 @@ public class Register {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public int getROBNum() {
+		return robNum;
+	}
+
+	public void setROBNum(int robNum) {
+		this.robNum = robNum;
 	}
 }

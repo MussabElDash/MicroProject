@@ -34,6 +34,10 @@ public abstract class Instruction {
 		}
 	}
 	
+	public RSType getType() {
+		return rsType;
+	}
+	
 	public abstract void execute();
 	public abstract String getMachineCode();
 	
