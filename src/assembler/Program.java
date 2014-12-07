@@ -3,6 +3,7 @@ package assembler;
 import java.util.HashMap;
 import java.util.ArrayList;
 
+import tomasulo.RSMaster;
 import utilities.CacheDetailsHolder;
 import utilities.Pair;
 import gui.CacheHitWindow;
@@ -47,6 +48,7 @@ public class Program {
 			int m = InstructionQueue.getPipelineWidth();
 			val = memory.getRegisterValue("PC");
 			// Prefetch m instructions
+			// TODO: Make sure prefetching logic is consistent with requirements
 			for(int i = 0; i < m && !InstructionQueue.isFull() && val != endAddress; i++) {
 				Instruction current = memory.getInstruction(val);
 				memory.setRegisterValue("PC", val + 1);
@@ -58,8 +60,9 @@ public class Program {
 			// Issue
 			if(!InstructionQueue.isEmpty())
 				InstructionQueue.issue();
-			// Execute
-			// Write
+			// Execute, Write
+			if(!RSMaster.isBusy())
+				RSMaster.stepForth();
 			// Commit
 		} while (val != endAddress || !InstructionQueue.isEmpty());
 	}
