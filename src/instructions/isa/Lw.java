@@ -1,12 +1,13 @@
 package instructions.isa;
 
-import utilities.Utilities;
 import instructions.Instruction;
+import tomasulo.RSType;
+import utilities.Utilities;
 
 public class Lw extends Instruction {
 
 	public Lw(String[] params) {
-		super(params, new String[] { "regA", "regB", "imm" }, "0101");
+		super(params, new String[] { "regA", "regB", "imm" }, "0101", RSType.MEM);
 	}
 
 	@Override

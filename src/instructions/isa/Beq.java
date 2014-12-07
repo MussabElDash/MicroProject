@@ -1,12 +1,13 @@
 package instructions.isa;
 
 import instructions.Instruction;
+import tomasulo.RSType;
 import utilities.Utilities;
 
 public class Beq extends Instruction {
 
 	public Beq(String[] params) {
-		super(params, new String[] { "regA", "regB", "imm" }, "0110");
+		super(params, new String[] { "regA", "regB", "imm" }, "0110", RSType.JMP);
 	}
 
 	@Override

@@ -1,12 +1,13 @@
 package instructions.isa;
 
-import utilities.Utilities;
 import instructions.Instruction;
+import tomasulo.RSType;
+import utilities.Utilities;
 
 public class Jmp extends Instruction {
 
 	public Jmp(String[] params) {
-		super(params, new String[]{"regA", "imm"}, "1000");
+		super(params, new String[]{"regA", "imm"}, "1000", RSType.JMP);
 	}
 
 	@Override

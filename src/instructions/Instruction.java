@@ -1,6 +1,7 @@
 package instructions;
 
 import memory.Memory;
+import tomasulo.RSType;
 
 public abstract class Instruction {
 	protected String[] parameters;
@@ -8,8 +9,10 @@ public abstract class Instruction {
 	protected int regANum, regBNum, regCNum, immValue;
 	protected Memory mem = Memory.getInstance();
 	protected String opcode;
+	protected RSType rsType;
 	
-	protected Instruction(String[] params, String[] target, String op) {
+	protected Instruction(String[] params, String[] target, String op, RSType type) {
+		rsType = type;
 		parameters = params;
 		opcode = op;
 		for(int i = 0; i < target.length; i++) {

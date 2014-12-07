@@ -1,12 +1,13 @@
 package instructions.isa;
 
-import utilities.Utilities;
 import instructions.Instruction;
+import tomasulo.RSType;
+import utilities.Utilities;
 
 public class Mul extends Instruction {
 
 	public Mul(String[] params) {
-		super(params, new String[]{"regA", "regB", "regC"}, "1001");
+		super(params, new String[]{"regA", "regB", "regC"}, "1001", RSType.MUL);
 	}
 
 	@Override

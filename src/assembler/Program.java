@@ -61,9 +61,10 @@ public class Program {
 			if(!InstructionQueue.isEmpty())
 				InstructionQueue.issue();
 			// Execute, Write
-			if(!RSMaster.isBusy())
+			if(!RSMaster.isEmpty())
 				RSMaster.stepForth();
 			// Commit
+			// TODO: decide where to place commit logic
 		} while (val != endAddress || !InstructionQueue.isEmpty());
 	}
 

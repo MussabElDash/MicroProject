@@ -1,12 +1,13 @@
 package instructions.isa;
 
+import tomasulo.RSType;
 import utilities.Utilities;
 import instructions.Instruction;
 
 public class Sub extends Instruction {
 
 	public Sub(String[] params) {
-		super(params, new String[]{"regA", "regB", "regC"}, "1011");
+		super(params, new String[]{"regA", "regB", "regC"}, "1011", RSType.ADD);
 	}
 
 	@Override

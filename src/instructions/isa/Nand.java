@@ -1,12 +1,13 @@
 package instructions.isa;
 
+import tomasulo.RSType;
 import utilities.Utilities;
 import instructions.Instruction;
 
 public class Nand extends Instruction {
 
 	public Nand(String[] params) {
-		super(params, new String[]{"regA", "regB", "regC"}, "0010");
+		super(params, new String[]{"regA", "regB", "regC"}, "0010", RSType.ADD);
 	}
 
 	@Override
