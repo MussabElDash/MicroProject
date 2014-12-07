@@ -29,7 +29,7 @@ public class RSMaster {
 		return numInstructions == 0;
 	}
 	
-	public static boolean addInstruction(Instruction instruction) {
+	public static boolean issue(Instruction instruction) {
 		for(int i = 0; i < rsCount; i++)
 			if(rStations[i].free() && rStations[i].getType() == instruction.getType()) {
 				// TODO: binding logic
