@@ -23,6 +23,10 @@ public class InstructionQueue {
 		return queue.size() >= size;
 	}
 	
+	public static Instruction front() {
+		return queue.peek();
+	}
+	
 	public static Instruction dequeu() {
 		return queue.pop();
 	}
@@ -49,6 +53,9 @@ public class InstructionQueue {
 	}
 	
 	public static void issue() {
-		// TODO: Add issue logic
+		for(int i = 0; i < pipelineWidth && !isEmpty(); i++) {
+			Instruction next = front();
+			// TODO: issue logic
+		}
 	}
 }
