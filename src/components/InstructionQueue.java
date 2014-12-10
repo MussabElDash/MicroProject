@@ -1,4 +1,4 @@
-package instructions;
+package components;
 
 public class InstructionQueue {
 
