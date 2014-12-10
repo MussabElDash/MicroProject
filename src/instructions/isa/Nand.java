@@ -20,4 +20,16 @@ public class Nand extends Instruction {
 				+ Utilities.getBinaryNumber(getRegBNum(), 3) + "0000"
 				+ Utilities.getBinaryNumber(getRegCNum(), 3);
 	}
+
+	@Override
+	public void writeBack() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void commit() {
+		// TODO Auto-generated method stub
+		
+	}
 }

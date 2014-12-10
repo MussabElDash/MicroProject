@@ -35,6 +35,8 @@ public class Program {
 		this.afterExec();
 	}
 
+	//FETCH and ISSUE here
+	
 	public void execute() {
 		int val = 0;
 		memory.setRegisterValue("PC", startAddress);

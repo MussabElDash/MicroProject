@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-import com.jgoodies.forms.util.Utilities;
-
 import utilities.CacheDetailsHolder;
 import utilities.Pair;
 
