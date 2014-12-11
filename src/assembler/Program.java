@@ -39,8 +39,6 @@ public class Program {
 		this.execute();
 		this.afterExec();
 	}
-
-	//FETCH and ISSUE here
 	
 	public void execute() {
 		int val = 0;
