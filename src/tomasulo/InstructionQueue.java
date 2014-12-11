@@ -1,4 +1,6 @@
-package instructions;
+package tomasulo;
+
+import instructions.Instruction;
 
 import java.util.LinkedList;
 

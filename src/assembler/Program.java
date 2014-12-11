@@ -1,16 +1,18 @@
 package assembler;
 
-import java.util.HashMap;
-import java.util.ArrayList;
-
-import tomasulo.RSMaster;
-import utilities.CacheDetailsHolder;
-import utilities.Pair;
 import gui.CacheHitWindow;
 import gui.RegistersTable;
 import instructions.Instruction;
-import instructions.InstructionQueue;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import memory.Memory;
+import tomasulo.InstructionQueue;
+import tomasulo.RSMaster;
+import utilities.CacheDetailsHolder;
+import utilities.Pair;
+
 
 public class Program {
 	Memory memory;
@@ -38,6 +40,8 @@ public class Program {
 		this.afterExec();
 	}
 
+	//FETCH and ISSUE here
+	
 	public void execute() {
 		int val = 0;
 		memory.setRegisterValue("PC", startAddress);

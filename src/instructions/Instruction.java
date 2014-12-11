@@ -39,6 +39,9 @@ public abstract class Instruction {
 	}
 	
 	public abstract void execute();
+	public abstract void writeBack();
+	public abstract void commit();
+	
 	public abstract String getMachineCode();
 	
 	public int getRegANum() {

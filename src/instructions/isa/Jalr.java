@@ -22,4 +22,16 @@ public class Jalr extends Instruction {
 				+ Utilities.getBinaryNumber(getRegBNum(), 3) + "0000000";
 	}
 
+	@Override
+	public void writeBack() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void commit() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
