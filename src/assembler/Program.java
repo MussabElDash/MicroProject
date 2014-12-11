@@ -52,7 +52,6 @@ public class Program {
 			int m = InstructionQueue.getPipelineWidth();
 			val = memory.getRegisterValue("PC");
 			// Prefetch m instructions
-			// TODO: Make sure prefetching logic is consistent with requirements. This is all made up!
 			for(int i = 0; i < m && !InstructionQueue.isFull() && val != endAddress; i++) {
 				Instruction current = memory.getInstruction(val);
 				memory.setRegisterValue("PC", val + 1);
