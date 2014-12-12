@@ -29,7 +29,7 @@ public class InstructionQueue {
 		return queue.peek();
 	}
 	
-	public static Instruction dequeu() {
+	public static Instruction dequeue() {
 		return queue.pop();
 	}
 	
