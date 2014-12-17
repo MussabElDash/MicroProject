@@ -51,7 +51,10 @@ public class RSMaster {
 	}
 	
 	public static void issue(int ind, Instruction instruction) {
-		// TODO: binding logic
+		ReservationStation w = rStations.get(ind);
+		w.setOp(instruction);
+		w.setCycles(delay.get(instruction.getType()));
+		//Rest of attributes
 	}
 	
 }

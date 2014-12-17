@@ -32,45 +32,68 @@ public class ReservationStation {
 		A = Vj + A;
 	}
 
-	public int getDestination() {
-		return destination;
+	public Instruction getOp() {
+		return op;
 	}
-	
-	public void setValues(int j, int k) {
-		Vj = j;
-		Vk = k;
+
+	public void setOp(Instruction op) {
+		this.op = op;
 	}
-	
-	public void setSources(int j, int k) {
-		Qj = j;
-		Qk = k;
-	}
-	
-	public int getFirstOperand() {
+
+	public int getVj() {
 		return Vj;
 	}
-	
-	public int getSecondOperand() {
+
+	public void setVj(int vj) {
+		Vj = vj;
+	}
+
+	public int getVk() {
 		return Vk;
 	}
-	
-	public int getFirstSource() {
+
+	public void setVk(int vk) {
+		Vk = vk;
+	}
+
+	public int getQj() {
 		return Qj;
 	}
-	
-	public int getSecondSource() {
+
+	public void setQj(int qj) {
+		Qj = qj;
+	}
+
+	public int getQk() {
 		return Qk;
+	}
+
+	public void setQk(int qk) {
+		Qk = qk;
+	}
+
+	public int getDestination() {
+		return destination;
 	}
 
 	public void setDestination(int destination) {
 		this.destination = destination;
 	}
-	
-	public void setCycles(int cycles) {
-		this.cycles = cycles;
+
+	public int getA() {
+		return A;
 	}
-	
+
+	public void setA(int a) {
+		A = a;
+	}
+
 	public int getCycles() {
 		return cycles;
 	}
+
+	public void setCycles(int cycles) {
+		this.cycles = cycles;
+	}
+
 }
