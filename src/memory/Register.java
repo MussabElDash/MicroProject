@@ -12,6 +12,7 @@ public class Register {
 		this.isZeroRegister = isZeroRegister;
 		this.title = title;
 		value = 0;
+		robNum = -1;
 	}
 	
 	public int getValue() {

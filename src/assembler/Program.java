@@ -10,6 +10,7 @@ import java.util.HashMap;
 import memory.Memory;
 import tomasulo.InstructionQueue;
 import tomasulo.RSMaster;
+import tomasulo.RSType;
 import utilities.CacheDetailsHolder;
 import utilities.Pair;
 
@@ -23,7 +24,9 @@ public class Program {
 
 	public Program(String code, int startAddress, int MemAccessTime,
 			CacheDetailsHolder[] cacheDetails,
-			HashMap<Integer, Integer> editedAddress) {
+			HashMap<Integer, Integer> editedAddress,
+			HashMap<RSType, Integer> rStations,
+			int ROBSize) {
 		ArrayList<CacheDetailsHolder> caches = new ArrayList<>();
 		for (int i = 0; i < cacheDetails.length; i++) {
 			caches.add(cacheDetails[i]);
@@ -36,6 +39,10 @@ public class Program {
 		this.startAddress = startAddress;
 		this.endAddress = startAddress + (instructions.length - 1);
 		this.numOfInstructions = 0;
+		
+		RSMaster.init(rStations);
+		//INIT ROB
+		
 		this.execute();
 		this.afterExec();
 	}

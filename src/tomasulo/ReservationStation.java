@@ -11,6 +11,10 @@ public class ReservationStation {
 	private int destination;
 	private int A;
 	
+	public ReservationStation(RSType type) {
+		this.type = type;
+	}
+	
 	public RSType getType() {
 		return type;
 	}
