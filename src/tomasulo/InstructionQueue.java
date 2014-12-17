@@ -58,6 +58,11 @@ public class InstructionQueue {
 		for(int i = 0; i < pipelineWidth && !isEmpty(); i++) {
 			Instruction next = front();
 			// TODO: issue logic
+			int ind = RSMaster.findFreeStation(next.getType());
+			if (!ReorderBuffer.isFull() && ind != -1) {
+				ReorderBuffer.issue(next);
+				RSMaster.issue(ind, next);
+			}
 		}
 	}
 }

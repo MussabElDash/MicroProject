@@ -7,7 +7,7 @@ import utilities.Utilities;
 public class Lw extends Instruction {
 
 	public Lw(String[] params) {
-		super(params, new String[] { "regA", "regB", "imm" }, "0101", RSType.MEM);
+		super(params, new String[] { "regA", "regB", "imm" }, "0101", RSType.LD);
 	}
 
 	@Override

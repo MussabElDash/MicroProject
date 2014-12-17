@@ -27,6 +27,7 @@ public class Program {
 			CacheDetailsHolder[] cacheDetails,
 			HashMap<Integer, Integer> editedAddress,
 			HashMap<RSType, Integer> rStations,
+			HashMap<RSType, Integer> delay,
 			int ROBSize) {
 		ArrayList<CacheDetailsHolder> caches = new ArrayList<>();
 		for (int i = 0; i < cacheDetails.length; i++) {
@@ -41,7 +42,7 @@ public class Program {
 		this.endAddress = startAddress + (instructions.length - 1);
 		this.numOfInstructions = 0;
 		
-		RSMaster.init(rStations);
+		RSMaster.init(rStations, delay);
 		ReorderBuffer.init(ROBSize);
 		
 		this.run();

@@ -4,17 +4,15 @@ import memory.Register;
 
 public class ReorderBufferElement {
 	private int idx;
-	private Register dest;
+	private String dest;
 	private String val;
 	private boolean ready;
-	private int iNum;
 	
-	public ReorderBufferElement(int idx, Register dest, String val, boolean ready, int iNum) {
+	public ReorderBufferElement(int idx, String dest, String val, boolean ready) {
 		this.idx = idx;
 		this.dest = dest;
 		this.val = val;
 		this.ready = ready;
-		this.iNum = iNum;
 	}
 
 	public int getIdx() {
@@ -25,11 +23,11 @@ public class ReorderBufferElement {
 		this.idx = idx;
 	}
 
-	public Register getDest() {
+	public String getDest() {
 		return dest;
 	}
 
-	public void setDest(Register dest) {
+	public void setDest(String dest) {
 		this.dest = dest;
 	}
 
@@ -47,13 +45,5 @@ public class ReorderBufferElement {
 
 	public void setReady(boolean ready) {
 		this.ready = ready;
-	}
-
-	public int getINum() {
-		return iNum;
-	}
-
-	public void setINum(int iNum) {
-		this.iNum = iNum;
 	}
 }

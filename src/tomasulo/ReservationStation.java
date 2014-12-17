@@ -10,6 +10,7 @@ public class ReservationStation {
 	private int Qj, Qk;
 	private int destination;
 	private int A;
+	private int cycles;
 	
 	public ReservationStation(RSType type) {
 		this.type = type;
@@ -63,5 +64,13 @@ public class ReservationStation {
 
 	public void setDestination(int destination) {
 		this.destination = destination;
+	}
+	
+	public void setCycles(int cycles) {
+		this.cycles = cycles;
+	}
+	
+	public int getCycles() {
+		return cycles;
 	}
 }

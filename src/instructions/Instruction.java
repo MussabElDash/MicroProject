@@ -53,6 +53,18 @@ public abstract class Instruction {
 		return regCNum;
 	}
 	
+	public String getRegA() {
+		return regA;
+	}
+	
+	public String getRegB() {
+		return regB;
+	}
+	
+	public String getRegC() {
+		return regC;
+	}
+	
 	public String getOpcode() {
 		return opcode;
 	}

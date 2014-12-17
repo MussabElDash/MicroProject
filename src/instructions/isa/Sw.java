@@ -7,7 +7,7 @@ import instructions.Instruction;
 public class Sw extends Instruction {
 
 	public Sw(String[] params) {
-		super(params, new String[] { "regA", "regB", "imm" }, "0100", RSType.MEM);
+		super(params, new String[] { "regA", "regB", "imm" }, "0100", RSType.ST);
 	}
 
 	@Override

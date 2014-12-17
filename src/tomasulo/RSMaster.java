@@ -9,8 +9,9 @@ public class RSMaster {
 	private static int numInstructions;
 	private static int rsCount;
 	private static ArrayList<ReservationStation> rStations = new ArrayList<ReservationStation>();
+	private static HashMap<RSType, Integer> delay = new HashMap<RSType, Integer>();
 	
-	public static void init(HashMap<RSType, Integer> rsInfo) {
+	public static void init(HashMap<RSType, Integer> rsInfo, HashMap<RSType, Integer> exc) {
 		int sum = 0;
 		for (RSType type : RSType.values()) {
 			int cnt = rsInfo.get(type).intValue();
@@ -21,6 +22,7 @@ public class RSMaster {
 		}
 		rsCount = sum;
 		numInstructions = 0;
+		delay = exc;
 	}
 	
 	public static void stepForth() {
@@ -39,13 +41,17 @@ public class RSMaster {
 		return numInstructions == 0;
 	}
 	
-	public static boolean issue(Instruction instruction) {
-		for(int i = 0; i < rsCount; i++)
-			if(rStations.get(i).free() && rStations.get(i).getType() == instruction.getType()) {
-				// TODO: binding logic
-				return true;
+	public static int findFreeStation(RSType type) {
+		for(int i = 0; i < rsCount; i++) {
+			if(rStations.get(i).free() && rStations.get(i).getType() == type) {
+				return i;
 			}
-		return false;
+		}
+		return -1;
+	}
+	
+	public static void issue(int ind, Instruction instruction) {
+		// TODO: binding logic
 	}
 	
 }

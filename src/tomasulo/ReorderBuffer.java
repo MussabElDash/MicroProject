@@ -1,5 +1,7 @@
 package tomasulo;
 
+import instructions.Instruction;
+
 import java.util.ArrayList;
 
 import memory.Register;
@@ -14,22 +16,29 @@ public class ReorderBuffer {
 		table = new ArrayList<ReorderBufferElement>(size);
 	}
 	
-	public static boolean insert(Register dest, int num) {
-		if (table.size()+1 < size) {
-			table.add(new ReorderBufferElement(cnt%size, dest, "", false, num));
-			cnt ++;
-			return true;
-		}
-		return false;
+	public static void insert(String dest) {
+		table.add(new ReorderBufferElement(cnt%size, dest, "", false));
+		cnt ++;
 	}
 	
 	public static int getFirst() {
-		return table.get(0).getINum();
+		return table.get(0).getIdx();
 	}
 	
 	public static void removeFirst() {
 		if (table.size() > 0) {
 			table.remove(0);
+		}
+	}
+	
+	public static boolean isFull() {
+		return (table.size() == size);
+	}
+	
+	public static void issue(Instruction instruction) {
+		String dest = null;
+		if (instruction.getType() != RSType.ST) {
+			dest = instruction.getRegA();
 		}
 	}
 }
