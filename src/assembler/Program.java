@@ -11,6 +11,7 @@ import memory.Memory;
 import tomasulo.InstructionQueue;
 import tomasulo.RSMaster;
 import tomasulo.RSType;
+import tomasulo.ReorderBuffer;
 import utilities.CacheDetailsHolder;
 import utilities.Pair;
 
@@ -41,13 +42,13 @@ public class Program {
 		this.numOfInstructions = 0;
 		
 		RSMaster.init(rStations);
-		//INIT ROB
+		ReorderBuffer.init(ROBSize);
 		
-		this.execute();
-		this.afterExec();
+		this.run();
+		this.afterRun();
 	}
 	
-	public void execute() {
+	public void run() {
 		int val = 0;
 		memory.setRegisterValue("PC", startAddress);
 		
@@ -76,7 +77,7 @@ public class Program {
 		} while (val != endAddress || !InstructionQueue.isEmpty());
 	}
 
-	public void afterExec() {
+	public void afterRun() {
 		RegistersTable.updateRegisters();
 		double amat = memory.getAMAT();
 		ArrayList<Pair<Integer, Integer>> hitRatios = memory.getCacheStats();
