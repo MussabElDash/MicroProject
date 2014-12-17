@@ -6,7 +6,7 @@ public class Register {
 	private short value = 0;
 	private String title = "NOT SET";
 	private boolean isZeroRegister = false;
-	private int robNum;
+	private int robNum = -1;
 	
 	public Register(boolean isZeroRegister, String title){
 		this.isZeroRegister = isZeroRegister;

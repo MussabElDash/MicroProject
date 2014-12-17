@@ -18,10 +18,9 @@ public class ReorderBuffer {
 		table = new ArrayList<ReorderBufferElement>(size);
 	}
 
-	public static void insert(String dest) {
-		table.add(new ReorderBufferElement(cnt % size, dest, "", false));
-		Memory.getInstance().getRegister(dest).setROBNum(cnt % size);
-		cnt++;
+	private static void insert(String dest) {
+		table.add(new ReorderBufferElement(cnt, dest, "", false));
+		Memory.getInstance().getRegister(dest).setROBNum(cnt);
 	}
 
 	public static int getFirst() {
@@ -38,7 +37,7 @@ public class ReorderBuffer {
 		return (table.size() == size);
 	}
 
-	public static void issue(Instruction instruction) {
+	public static int issue(Instruction instruction) {
 		String dest = "";
 		if (instruction.getType() != RSType.ST
 				&& (instruction.getType() != RSType.JMP || (instruction
@@ -46,5 +45,8 @@ public class ReorderBuffer {
 			dest = instruction.getRegA();
 		}
 		insert(dest);
+		int ret = cnt;
+		cnt = (cnt + 1) % size;
+		return ret;
 	}
 }

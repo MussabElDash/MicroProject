@@ -60,8 +60,8 @@ public class InstructionQueue {
 			// TODO: issue logic
 			int ind = RSMaster.findFreeStation(next.getType());
 			if (!ReorderBuffer.isFull() && ind != -1) {
-				ReorderBuffer.issue(next);
-				RSMaster.issue(ind, next);
+				int cnt = ReorderBuffer.issue(next);
+				RSMaster.issue(ind, next, cnt);
 			}
 		}
 	}
