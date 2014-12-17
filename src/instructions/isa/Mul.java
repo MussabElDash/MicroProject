@@ -22,16 +22,4 @@ public class Mul extends Instruction {
 				+ Utilities.getBinaryNumber(getRegCNum(), 3);
 	}
 
-	@Override
-	public void writeBack() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void commit() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
