@@ -16,8 +16,44 @@ public class ReorderBufferElement {
 		this.ready = ready;
 		this.iNum = iNum;
 	}
-	
+
+	public int getIdx() {
+		return idx;
+	}
+
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
+
+	public Register getDest() {
+		return dest;
+	}
+
+	public void setDest(Register dest) {
+		this.dest = dest;
+	}
+
+	public String getVal() {
+		return val;
+	}
+
+	public void setVal(String val) {
+		this.val = val;
+	}
+
+	public boolean isReady() {
+		return ready;
+	}
+
+	public void setReady(boolean ready) {
+		this.ready = ready;
+	}
+
 	public int getINum() {
 		return iNum;
+	}
+
+	public void setINum(int iNum) {
+		this.iNum = iNum;
 	}
 }
