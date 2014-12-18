@@ -6,7 +6,6 @@ import instructions.isa.Jalr;
 import java.util.ArrayList;
 
 import memory.Memory;
-import memory.Register;
 
 public class ReorderBuffer {
 	private static ArrayList<ReorderBufferElement> table;
@@ -19,7 +18,7 @@ public class ReorderBuffer {
 	}
 
 	private static void insert(String dest) {
-		table.add(new ReorderBufferElement(cnt+1, dest, "", false));
+		table.add(new ReorderBufferElement(cnt+1, dest, 0, false));
 		Memory.getInstance().getRegister(dest).setROBNum(cnt+1);
 	}
 
@@ -48,5 +47,14 @@ public class ReorderBuffer {
 		int ret = cnt + 1;
 		cnt = (cnt + 1) % size;
 		return ret;
+	}
+	
+	public static ReorderBufferElement getROBElement(int idx) {
+		for (int i=0; i<table.size(); i++) {
+			if (table.get(i).getIdx() == idx) {
+				return table.get(i);
+			}
+		}
+		return null;
 	}
 }

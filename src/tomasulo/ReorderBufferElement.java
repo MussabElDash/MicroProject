@@ -1,14 +1,12 @@
 package tomasulo;
 
-import memory.Register;
-
 public class ReorderBufferElement {
 	private int idx;
 	private String dest;
-	private String val;
+	private int val;
 	private boolean ready;
 	
-	public ReorderBufferElement(int idx, String dest, String val, boolean ready) {
+	public ReorderBufferElement(int idx, String dest, int val, boolean ready) {
 		this.idx = idx;
 		this.dest = dest;
 		this.val = val;
@@ -31,11 +29,11 @@ public class ReorderBufferElement {
 		this.dest = dest;
 	}
 
-	public String getVal() {
+	public int getVal() {
 		return val;
 	}
 
-	public void setVal(String val) {
+	public void setVal(int val) {
 		this.val = val;
 	}
 

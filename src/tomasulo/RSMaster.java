@@ -14,6 +14,7 @@ public class RSMaster {
 	private static int rsCount;
 	private static ArrayList<ReservationStation> rStations = new ArrayList<ReservationStation>();
 	private static HashMap<RSType, Integer> delay = new HashMap<RSType, Integer>();
+	private static Memory mem = Memory.getInstance();
 
 	public static void init(HashMap<RSType, Integer> rsInfo,
 			HashMap<RSType, Integer> exc) {
@@ -67,7 +68,6 @@ public class RSMaster {
 			}
 		}
 		else {
-			Memory mem = Memory.getInstance();
 			int val = mem.getRegister(reg).getROBNum();
 			if (val == -1) {
 				if (num == 1) {
@@ -80,13 +80,26 @@ public class RSMaster {
 				}
 			}
 			else {
-				if (num == 1) {
-					w.setVj(0);
-					w.setQj(val);
+				ReorderBufferElement elem = ReorderBuffer.getROBElement(val);
+				if (elem.isReady() == true) {
+					if (num == 1) {
+						w.setVj(elem.getVal());
+						w.setQj(0);
+					}
+					else {
+						w.setVk(elem.getVal());
+						w.setQk(0);
+					}
 				}
 				else {
-					w.setVk(0);
-					w.setQk(val);
+					if (num == 1) {
+						w.setVj(0);
+						w.setQj(val);
+					}
+					else {
+						w.setVk(0);
+						w.setQk(val);
+					}
 				}
 			}
 		}
@@ -110,11 +123,19 @@ public class RSMaster {
 			else {
 				updateRSField(w, instruction.getRegC(), 2, false);
 			}
+			mem.getRegister(instruction.getRegA()).setROBNum(robInd);
 		}
 		else if (instruction.getType() == RSType.LD) {
+			updateRSField(w, instruction.getRegB(), 1, false);
+			mem.getRegister(instruction.getRegA()).setROBNum(robInd);
+		}
+		else if (instruction.getType() == RSType.ST) {
+			updateRSField(w, instruction.getRegB(), 1, false);
+			updateRSField(w, instruction.getRegA(), 2, false);
+		}
+		else if (instruction.getType() == RSType.JMP) {
 			
 		}
-		// Rest of attributes
 	}
 
 }
