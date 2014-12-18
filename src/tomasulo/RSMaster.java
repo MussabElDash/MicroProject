@@ -109,8 +109,8 @@ public class RSMaster {
 						if (!chkRS.free()
 								&& chkRS.getType() == RSType.ST
 								&& chkRS.getCycles() == delay.get(RSType.ST)
-								&& chkRS.getDestination() < curRS
-										.getDestination()) {
+								&& ReorderBuffer.before(chkRS.getDestination(),
+										curRS.getDestination())) {
 							noStores = false;
 							break;
 						}
@@ -125,8 +125,8 @@ public class RSMaster {
 						ReservationStation chkRS = rStations.get(j);
 						if (!chkRS.free()
 								&& chkRS.getType() == RSType.ST
-								&& chkRS.getDestination() < curRS
-										.getDestination()
+								&& ReorderBuffer.before(chkRS.getDestination(),
+										curRS.getDestination())
 								&& chkRS.getA() == curRS.getA()) {
 							noStores = false;
 							break;
@@ -137,7 +137,12 @@ public class RSMaster {
 					}
 				}
 			} else if (ins.getType() == RSType.ST) {
-
+				if (curRS.getQj() == 0) {
+					curRS.calcAddress();
+					ReorderBufferElement elem = ReorderBuffer.getROBElement(curRS.getDestination());
+					elem.setDest(curRS.getA()+"");
+					curRS.setCycles(curRS.getCycles() - 1);
+				}
 			}
 		}
 	}

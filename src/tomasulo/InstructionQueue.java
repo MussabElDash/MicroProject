@@ -61,6 +61,7 @@ public class InstructionQueue {
 			if (!ReorderBuffer.isFull() && ind != -1) {
 				int cnt = ReorderBuffer.issue(next);
 				RSMaster.issue(ind, next, cnt);
+				dequeue();
 			}
 			else {
 				break;

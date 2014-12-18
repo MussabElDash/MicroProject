@@ -54,4 +54,16 @@ public class ReorderBuffer {
 		}
 		return null;
 	}
+	
+	public static boolean before(int dest1, int dest2) {
+		for (int i=0; i<table.size(); i++) {
+			if (table.get(i).getIdx() == dest1) {
+				return true;
+			}
+			if (table.get(i).getIdx() == dest2) {
+				return false;
+			}
+		}
+		return false;
+	}
 }
