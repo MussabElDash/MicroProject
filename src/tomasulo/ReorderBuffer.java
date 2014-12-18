@@ -1,9 +1,11 @@
 package tomasulo;
 
 import instructions.Instruction;
+import instructions.isa.Beq;
 
 import java.util.ArrayList;
 
+import assembler.Program;
 import utilities.Utilities;
 import memory.Memory;
 import memory.Register;
@@ -40,7 +42,7 @@ public class ReorderBuffer {
 
 	public static int issue(Instruction instruction) {
 		String dest = "";
-		if (instruction.getType() != RSType.ST) {
+		if (instruction.getType() != RSType.ST && !(instruction instanceof Beq)) {
 			dest = instruction.getRegA();
 		}
 		insert(dest, instruction);
@@ -74,7 +76,17 @@ public class ReorderBuffer {
 		ReorderBufferElement f = getFirst();
 		Instruction ins = f.getOp();
 		if (f.isReady() == true) {
-			if (ins.getType() == RSType.ST) {
+			if (ins instanceof Beq) {
+				if ((f.getVal() == 0 && ins.getImmValue() > 0)
+						|| (f.getVal() != 0 && ins.getImmValue() < 0)) {
+					mem.setRegisterValue("PC", Program.PC);
+					if (f.getVal() == 0) {
+						ins.execute();
+					}
+					ReorderBuffer.flush();
+					RSMaster.flush();
+				}
+			} else if (ins.getType() == RSType.ST) {
 				int dest = Integer.parseInt(f.getDest());
 				String val = Utilities.getBinaryNumber(f.getVal(), 16);
 				mem.setMemoryValue(dest, val);
@@ -84,6 +96,21 @@ public class ReorderBuffer {
 				String dest = f.getDest();
 				int val = f.getVal();
 				mem.setRegisterValue(dest, val);
+				Register reg = mem.getRegister(dest);
+				if (reg.getROBNum() == f.getIdx()) {
+					reg.setROBNum(-1);
+				}
+			}
+			removeFirst();
+		}
+	}
+	
+	public static void flush() {
+		while (table.size() > 0) {
+			ReorderBufferElement f = getFirst();
+			Instruction ins = f.getOp();
+			String dest = f.getDest();
+			if (!dest.equals("") && ins.getType() != RSType.ST) {
 				Register reg = mem.getRegister(dest);
 				if (reg.getROBNum() == f.getIdx()) {
 					reg.setROBNum(-1);

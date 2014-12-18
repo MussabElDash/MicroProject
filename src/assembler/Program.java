@@ -3,6 +3,7 @@ package assembler;
 import gui.CacheHitWindow;
 import gui.RegistersTable;
 import instructions.Instruction;
+import instructions.isa.Beq;
 import instructions.isa.Jalr;
 import instructions.isa.Jmp;
 import instructions.isa.Ret;
@@ -20,11 +21,12 @@ import utilities.Pair;
 
 
 public class Program {
-	Memory memory;
-	int startAddress;
-	int endAddress;
-	int numOfInstructions;
-	int numOfCycles;
+	private Memory memory;
+	private int startAddress;
+	private int endAddress;
+	private int numOfInstructions;
+	private int numOfCycles;
+	public static int PC;
 
 	public Program(String code, int startAddress, int MemAccessTime,
 			CacheDetailsHolder[] cacheDetails,
@@ -65,6 +67,13 @@ public class Program {
 				memory.setRegisterValue("PC", val + 1);
 				if (current instanceof Jmp || current instanceof Jalr || current instanceof Ret) {
 					current.execute();
+				}
+				else if (current instanceof Beq) {
+					PC = val + 1;
+					if (current.getImmValue() < 0) {
+						current.execute();
+					}
+					InstructionQueue.enqueue(current);
 				}
 				else {
 					InstructionQueue.enqueue(current);

@@ -8,7 +8,6 @@ import memory.Memory;
 import instructions.Instruction;
 import instructions.isa.Addi;
 import instructions.isa.Beq;
-import instructions.isa.Jmp;
 
 public class RSMaster {
 	private static int numInstructions;
@@ -35,7 +34,7 @@ public class RSMaster {
 	public static void stepForth() {
 		int minInd = -1;
 		int minIdx = 1000;
-		for (int i=0; i<rStations.size(); i++) {
+		for (int i = 0; i < rStations.size(); i++) {
 			ReservationStation curRS = rStations.get(i);
 			Instruction ins = curRS.getOp();
 			int curInd = -1;
@@ -45,20 +44,17 @@ public class RSMaster {
 					curInd = i;
 					curIdx = curRS.getDestination();
 				}
-			}
-			else if (ins.getType() == RSType.LD) {
+			} else if (ins.getType() == RSType.LD) {
 				if (curRS.getCycles() == -1) {
 					curInd = i;
 					curIdx = curRS.getDestination();
 				}
-			}
-			else if (ins.getType() == RSType.ST) {
+			} else if (ins.getType() == RSType.ST) {
 				if (curRS.getQk() == 0) {
 					if (curRS.getCycles() == -1) {
 						curInd = i;
 						curIdx = curRS.getDestination();
-					}
-					else {
+					} else {
 						curRS.setCycles(curRS.getCycles() - 1);
 					}
 				}
@@ -71,7 +67,15 @@ public class RSMaster {
 		if (minIdx != 1000) {
 			ReservationStation curRS = rStations.get(minInd);
 			Instruction ins = curRS.getOp();
-			if (ins.getType() == RSType.ADD || ins.getType() == RSType.MUL) {
+			if (ins instanceof Beq) {
+				int res = ins.compute(curRS.getVj(), curRS.getVk());
+				ReorderBufferElement elem = ReorderBuffer.getROBElement(curRS
+						.getDestination());
+				elem.setVal(res);
+				elem.setReady(true);
+				curRS.flush();
+			} else if (ins.getType() == RSType.ADD
+					|| ins.getType() == RSType.MUL) {
 				int res = ins.compute(curRS.getVj(), curRS.getVk());
 				for (int j = 0; j < rStations.size(); j++) {
 					ReservationStation chkRS = rStations.get(j);
@@ -84,14 +88,14 @@ public class RSMaster {
 						chkRS.setQk(0);
 					}
 				}
-				ReorderBufferElement elem = ReorderBuffer
-						.getROBElement(curRS.getDestination());
+				ReorderBufferElement elem = ReorderBuffer.getROBElement(curRS
+						.getDestination());
 				elem.setVal(res);
 				elem.setReady(true);
 				curRS.flush();
 			} else if (ins.getType() == RSType.LD) {
-				int res = Utilities.getDecimalNumber(mem
-						.getMemoryValue(curRS.getA()));
+				int res = Utilities.getDecimalNumber(mem.getMemoryValue(curRS
+						.getA()));
 				for (int j = 0; j < rStations.size(); j++) {
 					ReservationStation chkRS = rStations.get(j);
 					if (chkRS.getQj() == curRS.getDestination()) {
@@ -103,14 +107,14 @@ public class RSMaster {
 						chkRS.setQk(0);
 					}
 				}
-				ReorderBufferElement elem = ReorderBuffer
-						.getROBElement(curRS.getDestination());
+				ReorderBufferElement elem = ReorderBuffer.getROBElement(curRS
+						.getDestination());
 				elem.setVal(res);
 				elem.setReady(true);
 				curRS.flush();
 			} else if (ins.getType() == RSType.ST) {
-				ReorderBufferElement elem = ReorderBuffer
-						.getROBElement(curRS.getDestination());
+				ReorderBufferElement elem = ReorderBuffer.getROBElement(curRS
+						.getDestination());
 				elem.setVal(curRS.getVk());
 				elem.setReady(true);
 				curRS.flush();
@@ -163,8 +167,9 @@ public class RSMaster {
 			} else if (ins.getType() == RSType.ST) {
 				if (curRS.getQj() == 0) {
 					curRS.calcAddress();
-					ReorderBufferElement elem = ReorderBuffer.getROBElement(curRS.getDestination());
-					elem.setDest(curRS.getA()+"");
+					ReorderBufferElement elem = ReorderBuffer
+							.getROBElement(curRS.getDestination());
+					elem.setDest(curRS.getA() + "");
 					curRS.setCycles(curRS.getCycles() - 1);
 				}
 			}
@@ -245,11 +250,13 @@ public class RSMaster {
 		w.setCycles(delay.get(instruction.getType()));
 		w.setDestination(robInd);
 		if (instruction.getType() == RSType.LD
-				|| instruction.getType() == RSType.ST
-				|| instruction instanceof Jmp || instruction instanceof Beq) {
+				|| instruction.getType() == RSType.ST) {
 			w.setA(instruction.getImmValue());
 		}
-		if (instruction.getType() == RSType.ADD
+		if (instruction instanceof Beq) {
+			updateRSField(w, instruction.getRegA(), 1, false);
+			updateRSField(w, instruction.getRegB(), 2, false);
+		} else if (instruction.getType() == RSType.ADD
 				|| instruction.getType() == RSType.MUL) {
 			updateRSField(w, instruction.getRegB(), 1, false);
 			if (instruction instanceof Addi) {
@@ -264,6 +271,12 @@ public class RSMaster {
 		} else if (instruction.getType() == RSType.ST) {
 			updateRSField(w, instruction.getRegB(), 1, false);
 			updateRSField(w, instruction.getRegA(), 2, false);
+		}
+	}
+
+	public static void flush() {
+		for (int i=0; i<rStations.size(); i++) {
+			rStations.get(i).flush();
 		}
 	}
 
