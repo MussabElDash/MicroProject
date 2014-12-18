@@ -66,4 +66,8 @@ public class ReorderBuffer {
 		}
 		return false;
 	}
+	
+	public static void commit() {
+		
+	}
 }

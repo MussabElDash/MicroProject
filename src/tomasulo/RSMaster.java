@@ -33,7 +33,6 @@ public class RSMaster {
 	}
 
 	public static void stepForth() {
-		// TODO: Execute logic for all reservation stations
 		for (int i = 0; i < rStations.size(); i++) {
 			ReservationStation curRS = rStations.get(i);
 			Instruction ins = curRS.getOp();

@@ -74,14 +74,11 @@ public class Program {
 				numOfInstructions++;
 				val = memory.getRegisterValue("PC");
 			}
-			// Issue
 			if(!InstructionQueue.isEmpty())
 				InstructionQueue.issue();
-			// Execute, Write
 			if(!RSMaster.isEmpty())
 				RSMaster.stepForth();
-			// Commit
-			// TODO: decide where to place commit logic
+			ReorderBuffer.commit();
 		} while (val != endAddress || !InstructionQueue.isEmpty());
 	}
 
