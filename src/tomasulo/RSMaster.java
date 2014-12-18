@@ -33,62 +33,87 @@ public class RSMaster {
 	}
 
 	public static void stepForth() {
-		for (int i = 0; i < rStations.size(); i++) {
+		int minInd = -1;
+		int minIdx = 1000;
+		for (int i=0; i<rStations.size(); i++) {
 			ReservationStation curRS = rStations.get(i);
 			Instruction ins = curRS.getOp();
+			int curInd = -1;
+			int curIdx = 1000;
 			if (ins.getType() == RSType.ADD || ins.getType() == RSType.MUL) {
 				if (curRS.getCycles() == 0) {
-					int res = ins.compute(curRS.getVj(), curRS.getVk());
-					for (int j = 0; j < rStations.size(); j++) {
-						ReservationStation chkRS = rStations.get(j);
-						if (chkRS.getQj() == curRS.getDestination()) {
-							chkRS.setVj(res);
-							chkRS.setQj(0);
-						}
-						if (chkRS.getQk() == curRS.getDestination()) {
-							chkRS.setVk(res);
-							chkRS.setQk(0);
-						}
-					}
-					ReorderBufferElement elem = ReorderBuffer
-							.getROBElement(curRS.getDestination());
-					elem.setVal(res);
-					elem.setReady(true);
-					curRS.flush();
+					curInd = i;
+					curIdx = curRS.getDestination();
 				}
-			} else if (ins.getType() == RSType.LD) {
+			}
+			else if (ins.getType() == RSType.LD) {
 				if (curRS.getCycles() == -1) {
-					int res = Utilities.getDecimalNumber(mem
-							.getMemoryValue(curRS.getA()));
-					for (int j = 0; j < rStations.size(); j++) {
-						ReservationStation chkRS = rStations.get(j);
-						if (chkRS.getQj() == curRS.getDestination()) {
-							chkRS.setVj(res);
-							chkRS.setQj(0);
-						}
-						if (chkRS.getQk() == curRS.getDestination()) {
-							chkRS.setVk(res);
-							chkRS.setQk(0);
-						}
-					}
-					ReorderBufferElement elem = ReorderBuffer
-							.getROBElement(curRS.getDestination());
-					elem.setVal(res);
-					elem.setReady(true);
-					curRS.flush();
+					curInd = i;
+					curIdx = curRS.getDestination();
 				}
-			} else if (ins.getType() == RSType.ST) {
+			}
+			else if (ins.getType() == RSType.ST) {
 				if (curRS.getQk() == 0) {
-					if (curRS.getCycles() != -1) {
+					if (curRS.getCycles() == -1) {
+						curInd = i;
+						curIdx = curRS.getDestination();
+					}
+					else {
 						curRS.setCycles(curRS.getCycles() - 1);
-					} else {
-						ReorderBufferElement elem = ReorderBuffer
-								.getROBElement(curRS.getDestination());
-						elem.setVal(curRS.getVk());
-						elem.setReady(true);
-						curRS.flush();
 					}
 				}
+			}
+			if (ReorderBuffer.before(curIdx, minIdx)) {
+				minIdx = curIdx;
+				minInd = curInd;
+			}
+		}
+		if (minIdx != 1000) {
+			ReservationStation curRS = rStations.get(minInd);
+			Instruction ins = curRS.getOp();
+			if (ins.getType() == RSType.ADD || ins.getType() == RSType.MUL) {
+				int res = ins.compute(curRS.getVj(), curRS.getVk());
+				for (int j = 0; j < rStations.size(); j++) {
+					ReservationStation chkRS = rStations.get(j);
+					if (chkRS.getQj() == curRS.getDestination()) {
+						chkRS.setVj(res);
+						chkRS.setQj(0);
+					}
+					if (chkRS.getQk() == curRS.getDestination()) {
+						chkRS.setVk(res);
+						chkRS.setQk(0);
+					}
+				}
+				ReorderBufferElement elem = ReorderBuffer
+						.getROBElement(curRS.getDestination());
+				elem.setVal(res);
+				elem.setReady(true);
+				curRS.flush();
+			} else if (ins.getType() == RSType.LD) {
+				int res = Utilities.getDecimalNumber(mem
+						.getMemoryValue(curRS.getA()));
+				for (int j = 0; j < rStations.size(); j++) {
+					ReservationStation chkRS = rStations.get(j);
+					if (chkRS.getQj() == curRS.getDestination()) {
+						chkRS.setVj(res);
+						chkRS.setQj(0);
+					}
+					if (chkRS.getQk() == curRS.getDestination()) {
+						chkRS.setVk(res);
+						chkRS.setQk(0);
+					}
+				}
+				ReorderBufferElement elem = ReorderBuffer
+						.getROBElement(curRS.getDestination());
+				elem.setVal(res);
+				elem.setReady(true);
+				curRS.flush();
+			} else if (ins.getType() == RSType.ST) {
+				ReorderBufferElement elem = ReorderBuffer
+						.getROBElement(curRS.getDestination());
+				elem.setVal(curRS.getVk());
+				elem.setReady(true);
+				curRS.flush();
 			}
 		}
 		for (int i = 0; i < rStations.size(); i++) {
