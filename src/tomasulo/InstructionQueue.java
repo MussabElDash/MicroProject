@@ -63,6 +63,9 @@ public class InstructionQueue {
 				int cnt = ReorderBuffer.issue(next);
 				RSMaster.issue(ind, next, cnt);
 			}
+			else {
+				break;
+			}
 		}
 	}
 }

@@ -68,6 +68,10 @@ public abstract class Instruction {
 	public String getOpcode() {
 		return opcode;
 	}
+	
+	public String getImm() {
+		return imm;
+	}
 
 	public int getImmValue() {
 		return immValue;

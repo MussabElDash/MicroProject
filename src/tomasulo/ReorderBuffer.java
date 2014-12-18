@@ -19,8 +19,8 @@ public class ReorderBuffer {
 	}
 
 	private static void insert(String dest) {
-		table.add(new ReorderBufferElement(cnt, dest, "", false));
-		Memory.getInstance().getRegister(dest).setROBNum(cnt);
+		table.add(new ReorderBufferElement(cnt+1, dest, "", false));
+		Memory.getInstance().getRegister(dest).setROBNum(cnt+1);
 	}
 
 	public static int getFirst() {
@@ -45,7 +45,7 @@ public class ReorderBuffer {
 			dest = instruction.getRegA();
 		}
 		insert(dest);
-		int ret = cnt;
+		int ret = cnt + 1;
 		cnt = (cnt + 1) % size;
 		return ret;
 	}
