@@ -57,7 +57,6 @@ public class InstructionQueue {
 	public static void issue() {
 		for(int i = 0; i < pipelineWidth && !isEmpty(); i++) {
 			Instruction next = front();
-			// TODO: issue logic
 			int ind = RSMaster.findFreeStation(next.getType());
 			if (!ReorderBuffer.isFull() && ind != -1) {
 				int cnt = ReorderBuffer.issue(next);

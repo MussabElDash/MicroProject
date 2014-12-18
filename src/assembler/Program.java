@@ -55,7 +55,6 @@ public class Program {
 		
 		do {
 			numOfCycles++;
-			// Main Tomasulo Loop
 			int m = InstructionQueue.getPipelineWidth();
 			val = memory.getRegisterValue("PC");
 			// Prefetch m instructions
