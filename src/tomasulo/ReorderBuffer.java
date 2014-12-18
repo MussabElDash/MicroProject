@@ -1,7 +1,6 @@
 package tomasulo;
 
 import instructions.Instruction;
-import instructions.isa.Jalr;
 
 import java.util.ArrayList;
 
