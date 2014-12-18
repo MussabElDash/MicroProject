@@ -33,7 +33,7 @@ public class Program {
 			CacheDetailsHolder[] cacheDetails,
 			HashMap<Integer, Integer> editedAddress,
 			HashMap<RSType, Integer> rStations, HashMap<RSType, Integer> delay,
-			int ROBSize) {
+			int ROBSize, int pipelineWidth) {
 		ArrayList<CacheDetailsHolder> caches = new ArrayList<>();
 		for (int i = 0; i < cacheDetails.length; i++) {
 			caches.add(cacheDetails[i]);
@@ -46,6 +46,7 @@ public class Program {
 		this.startAddress = startAddress;
 		this.endAddress = startAddress + (instructions.length - 1);
 
+		InstructionQueue.setPipelineWidth(pipelineWidth);
 		Program.numOfInstructions = 0;
 		Program.numOfCycles = 0;
 		Program.numOfBranches = 0;
