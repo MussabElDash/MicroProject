@@ -19,20 +19,20 @@ import tomasulo.ReorderBuffer;
 import utilities.CacheDetailsHolder;
 import utilities.Pair;
 
-
 public class Program {
 	private Memory memory;
 	private int startAddress;
 	private int endAddress;
-	private int numOfInstructions;
-	private int numOfCycles;
+	public static int numOfInstructions;
+	public static int numOfCycles;
+	public static int numOfBranches;
+	public static int numOfMisPredictions;
 	public static int PC;
 
 	public Program(String code, int startAddress, int MemAccessTime,
 			CacheDetailsHolder[] cacheDetails,
 			HashMap<Integer, Integer> editedAddress,
-			HashMap<RSType, Integer> rStations,
-			HashMap<RSType, Integer> delay,
+			HashMap<RSType, Integer> rStations, HashMap<RSType, Integer> delay,
 			int ROBSize) {
 		ArrayList<CacheDetailsHolder> caches = new ArrayList<>();
 		for (int i = 0; i < cacheDetails.length; i++) {
@@ -45,46 +45,51 @@ public class Program {
 				editedAddress);
 		this.startAddress = startAddress;
 		this.endAddress = startAddress + (instructions.length - 1);
-		this.numOfInstructions = 0;
-		
+
+		Program.numOfInstructions = 0;
+		Program.numOfCycles = 0;
+		Program.numOfBranches = 0;
+		Program.numOfMisPredictions = 0;
+
 		RSMaster.init(rStations, delay);
 		ReorderBuffer.init(ROBSize);
-		
+
 		this.run();
 		this.afterRun();
 	}
-	
+
 	public void run() {
 		int val = 0;
 		memory.setRegisterValue("PC", startAddress);
-		
 		do {
 			numOfCycles++;
 			int m = InstructionQueue.getPipelineWidth();
 			val = memory.getRegisterValue("PC");
-			for(int i = 0; i < m && !InstructionQueue.isFull() && val != endAddress; i++) {
+			for (int i = 0; i < m && !InstructionQueue.isFull()
+					&& val != endAddress; i++) {
 				Instruction current = memory.getInstruction(val);
 				memory.setRegisterValue("PC", val + 1);
-				if (current instanceof Jmp || current instanceof Jalr || current instanceof Ret) {
+				if (current instanceof Jmp || current instanceof Jalr
+						|| current instanceof Ret) {
+					if (current instanceof Jmp) {
+						numOfBranches++;
+					}
 					current.execute();
-				}
-				else if (current instanceof Beq) {
+				} else if (current instanceof Beq) {
+					numOfBranches++;
 					PC = val + 1;
 					if (current.getImmValue() < 0) {
 						current.execute();
 					}
 					InstructionQueue.enqueue(current);
-				}
-				else {
+				} else {
 					InstructionQueue.enqueue(current);
 				}
-				// TODO: check this logic. I'm not sure what this counter should do in case pre-fetched instructions were cleared from the buffer due to branch misprediction.
-				numOfInstructions++;
 				val = memory.getRegisterValue("PC");
 			}
-			if(!InstructionQueue.isEmpty())
+			if (!InstructionQueue.isEmpty())
 				InstructionQueue.issue();
-			if(!RSMaster.isEmpty())
+			if (!RSMaster.isEmpty())
 				RSMaster.stepForth();
 			ReorderBuffer.commit();
 		} while (val != endAddress || !InstructionQueue.isEmpty());

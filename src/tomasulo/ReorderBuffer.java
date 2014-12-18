@@ -76,10 +76,12 @@ public class ReorderBuffer {
 		ReorderBufferElement f = getFirst();
 		Instruction ins = f.getOp();
 		if (f.isReady() == true) {
+			Program.numOfInstructions++;
 			if (ins instanceof Beq) {
 				if ((f.getVal() == 0 && ins.getImmValue() > 0)
 						|| (f.getVal() != 0 && ins.getImmValue() < 0)) {
 					mem.setRegisterValue("PC", Program.PC);
+					Program.numOfMisPredictions++;
 					if (f.getVal() == 0) {
 						ins.execute();
 					}
@@ -104,7 +106,7 @@ public class ReorderBuffer {
 			removeFirst();
 		}
 	}
-	
+
 	public static void flush() {
 		while (table.size() > 0) {
 			ReorderBufferElement f = getFirst();
