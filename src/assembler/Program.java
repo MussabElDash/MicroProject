@@ -60,7 +60,6 @@ public class Program {
 			numOfCycles++;
 			int m = InstructionQueue.getPipelineWidth();
 			val = memory.getRegisterValue("PC");
-			// Prefetch m instructions
 			for(int i = 0; i < m && !InstructionQueue.isFull() && val != endAddress; i++) {
 				Instruction current = memory.getInstruction(val);
 				memory.setRegisterValue("PC", val + 1);
