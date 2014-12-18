@@ -41,6 +41,10 @@ public abstract class Instruction {
 	public abstract void execute();
 	public abstract String getMachineCode();
 	
+	public int compute(int valA, int valB) {
+		return 0;
+	}
+	
 	public int getRegANum() {
 		return regANum;
 	}

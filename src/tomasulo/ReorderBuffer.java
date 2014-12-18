@@ -38,9 +38,7 @@ public class ReorderBuffer {
 
 	public static int issue(Instruction instruction) {
 		String dest = "";
-		if (instruction.getType() != RSType.ST
-				&& (instruction.getType() != RSType.JMP || (instruction
-						.getType() == RSType.JMP && instruction instanceof Jalr))) {
+		if (instruction.getType() != RSType.ST) {
 			dest = instruction.getRegA();
 		}
 		insert(dest);

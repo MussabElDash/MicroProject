@@ -3,6 +3,7 @@ package tomasulo;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import utilities.Utilities;
 import memory.Memory;
 import instructions.Instruction;
 import instructions.isa.Addi;
@@ -33,6 +34,79 @@ public class RSMaster {
 
 	public static void stepForth() {
 		// TODO: Execute logic for all reservation stations
+		for (int i = 0; i < rStations.size(); i++) {
+			ReservationStation curRS = rStations.get(i);
+			Instruction ins = curRS.getOp();
+			if (ins.getType() == RSType.ADD || ins.getType() == RSType.MUL) {
+				if (curRS.getCycles() == 0) {
+					int res = ins.compute(curRS.getVj(), curRS.getVk());
+					for (int j=0; j<rStations.size(); j++) {
+						ReservationStation chkRS = rStations.get(j);
+						if (chkRS.getQj() == curRS.getDestination()) {
+							chkRS.setVj(res);
+							chkRS.setQj(0);
+						}
+						if (chkRS.getQk() == curRS.getDestination()) {
+							chkRS.setVk(res);
+							chkRS.setQk(0);
+						}
+					}
+					ReorderBufferElement elem = ReorderBuffer.getROBElement(curRS.getDestination());
+					elem.setVal(res);
+					elem.setReady(true);
+					curRS.flush();
+				}
+			} else if (ins.getType() == RSType.LD) {
+				if (curRS.getCycles() == -1) {
+					int res = Utilities.getDecimalNumber(mem.getMemoryValue(curRS.getA()));
+					for (int j=0; j<rStations.size(); j++) {
+						ReservationStation chkRS = rStations.get(j);
+						if (chkRS.getQj() == curRS.getDestination()) {
+							chkRS.setVj(res);
+							chkRS.setQj(0);
+						}
+						if (chkRS.getQk() == curRS.getDestination()) {
+							chkRS.setVk(res);
+							chkRS.setQk(0);
+						}
+					}
+					ReorderBufferElement elem = ReorderBuffer.getROBElement(curRS.getDestination());
+					elem.setVal(res);
+					elem.setReady(true);
+					curRS.flush();
+				}
+			}
+			else if (ins.getType() == RSType.ST) {
+				if (curRS.getQk() == 0) {
+					if (curRS.getCycles() != -1) {
+						curRS.setCycles(curRS.getCycles() - 1);
+					}
+					else {
+						ReorderBufferElement elem = ReorderBuffer.getROBElement(curRS.getDestination());
+						elem.setVal(curRS.getVk());
+						elem.setReady(true);
+						curRS.flush();
+					}
+				}
+			}
+		}
+		for (int i = 0; i < rStations.size(); i++) {
+			ReservationStation curRS = rStations.get(i);
+			Instruction ins = curRS.getOp();
+			if (ins.getType() == RSType.ADD || ins.getType() == RSType.MUL) {
+				if (curRS.getQj() == 0 && curRS.getQk() == 0) {
+					if (curRS.getCycles() != 0) {
+						curRS.setCycles(curRS.getCycles() - 1);
+					}
+				}
+			}
+			else if (ins.getType() == RSType.LD) {
+				
+			}
+			else if (ins.getType() == RSType.ST) {
+				
+			}
+		}
 	}
 
 	public static synchronized int size() {
@@ -41,6 +115,10 @@ public class RSMaster {
 
 	public static ReservationStation getRS(int num) {
 		return rStations.get(num);
+	}
+	
+	public static int getDelay(RSType type) {
+		return delay.get(type);
 	}
 
 	public static boolean isEmpty() {
@@ -55,48 +133,42 @@ public class RSMaster {
 		}
 		return -1;
 	}
-	
-	public static void updateRSField(ReservationStation w, String reg, int num, boolean isImm) {
+
+	public static void updateRSField(ReservationStation w, String reg, int num,
+			boolean isImm) {
 		if (isImm == true) {
 			if (num == 1) {
 				w.setVj(Integer.parseInt(reg));
 				w.setQj(0);
-			}
-			else {
+			} else {
 				w.setVk(Integer.parseInt(reg));
 				w.setQk(0);
 			}
-		}
-		else {
+		} else {
 			int val = mem.getRegister(reg).getROBNum();
 			if (val == -1) {
 				if (num == 1) {
 					w.setVj(mem.getRegisterValue(reg));
 					w.setQj(0);
-				}
-				else {
+				} else {
 					w.setQk(mem.getRegisterValue(reg));
 					w.setQk(0);
 				}
-			}
-			else {
+			} else {
 				ReorderBufferElement elem = ReorderBuffer.getROBElement(val);
 				if (elem.isReady() == true) {
 					if (num == 1) {
 						w.setVj(elem.getVal());
 						w.setQj(0);
-					}
-					else {
+					} else {
 						w.setVk(elem.getVal());
 						w.setQk(0);
 					}
-				}
-				else {
+				} else {
 					if (num == 1) {
 						w.setVj(0);
 						w.setQj(val);
-					}
-					else {
+					} else {
 						w.setVk(0);
 						w.setQk(val);
 					}
@@ -115,26 +187,21 @@ public class RSMaster {
 				|| instruction instanceof Jmp || instruction instanceof Beq) {
 			w.setA(instruction.getImmValue());
 		}
-		if (instruction.getType() == RSType.ADD || instruction.getType() == RSType.MUL) {
+		if (instruction.getType() == RSType.ADD
+				|| instruction.getType() == RSType.MUL) {
 			updateRSField(w, instruction.getRegB(), 1, false);
 			if (instruction instanceof Addi) {
 				updateRSField(w, instruction.getImm(), 2, true);
-			}
-			else {
+			} else {
 				updateRSField(w, instruction.getRegC(), 2, false);
 			}
 			mem.getRegister(instruction.getRegA()).setROBNum(robInd);
-		}
-		else if (instruction.getType() == RSType.LD) {
+		} else if (instruction.getType() == RSType.LD) {
 			updateRSField(w, instruction.getRegB(), 1, false);
 			mem.getRegister(instruction.getRegA()).setROBNum(robInd);
-		}
-		else if (instruction.getType() == RSType.ST) {
+		} else if (instruction.getType() == RSType.ST) {
 			updateRSField(w, instruction.getRegB(), 1, false);
 			updateRSField(w, instruction.getRegA(), 2, false);
-		}
-		else if (instruction.getType() == RSType.JMP) {
-			
 		}
 	}
 

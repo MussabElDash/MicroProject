@@ -14,6 +14,10 @@ public class Addi extends Instruction {
 	public void execute() {
 		mem.setRegisterValue(regA, mem.getRegisterValue(regB) + immValue);
 	}
+	
+	public int compute(int valA, int valB) {
+		return valA + valB;
+	}
 
 	@Override
 	public String getMachineCode() {

@@ -15,6 +15,10 @@ public class Nand extends Instruction {
 		mem.setRegisterValue(regA, ~(mem.getRegisterValue(regB) & mem.getRegisterValue(regC)));
 	}
 
+	public int compute(int valA, int valB) {
+		return ~(valA & valB);
+	}
+	
 	@Override
 	public String getMachineCode() {
 		return getOpcode() + Utilities.getBinaryNumber(getRegANum(), 3)

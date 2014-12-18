@@ -3,6 +3,9 @@ package assembler;
 import gui.CacheHitWindow;
 import gui.RegistersTable;
 import instructions.Instruction;
+import instructions.isa.Jalr;
+import instructions.isa.Jmp;
+import instructions.isa.Ret;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +64,12 @@ public class Program {
 			for(int i = 0; i < m && !InstructionQueue.isFull() && val != endAddress; i++) {
 				Instruction current = memory.getInstruction(val);
 				memory.setRegisterValue("PC", val + 1);
-				InstructionQueue.enqueue(current);
+				if (current instanceof Jmp || current instanceof Jalr || current instanceof Ret) {
+					current.execute();
+				}
+				else {
+					InstructionQueue.enqueue(current);
+				}
 				// TODO: check this logic. I'm not sure what this counter should do in case pre-fetched instructions were cleared from the buffer due to branch misprediction.
 				numOfInstructions++;
 				val = memory.getRegisterValue("PC");

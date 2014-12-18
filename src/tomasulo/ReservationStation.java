@@ -14,6 +14,7 @@ public class ReservationStation {
 	
 	public ReservationStation(RSType type) {
 		this.type = type;
+		this.cycles = RSMaster.getDelay(type);
 	}
 	
 	public RSType getType() {
@@ -94,6 +95,13 @@ public class ReservationStation {
 
 	public void setCycles(int cycles) {
 		this.cycles = cycles;
+	}
+	
+	public void flush() {
+		cycles = RSMaster.getDelay(type);
+		op = null;
+		Vj = Vk = Qj = Qk = 0;
+		destination = A = 0;
 	}
 
 }
